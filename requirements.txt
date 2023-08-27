@@ -1,521 +1,531 @@
-absl-py==1.3.0
-adafruit-ampy==1.1.0
-aiofiles==22.1.0
-aiohttp==3.8.4
-aiohttp-retry==2.8.3
-aiosignal==1.3.1
-aiosqlite==0.18.0
-ajsonrpc==1.2.0
-alembic==1.9.1
-altair==4.2.2
-ansible==7.2.0
-ansible-core==2.14.2
-anyio==3.6.2
-apturl==0.5.2
-argcomplete==2.0.0
-argon2-cffi==21.3.0
-argon2-cffi-bindings==21.2.0
-arrow==1.2.3
-asciinema==2.2.0
-asttokens==2.2.1
-astunparse==1.6.3
-async-generator==1.10
-async-timeout==4.0.2
-asyncio==3.4.3
-attrs==23.1.0
-Authlib==1.1.0
-autoflake==2.2.0
-autopep8==2.0.1
-azure-common==1.1.28
-azure-core==1.26.1
-azure-identity==1.9.0
-azure-mgmt-core==1.3.2
-azure-mgmt-rdbms==10.1.0
-azure-mgmt-resource==21.0.0
-azure-mgmt-subscription==3.0.0
-Babel==2.11.0
-backcall==0.2.0
-backoff==2.2.1
-bcrypt==3.2.0
-beautifulsoup4==4.11.1
-bernhard==0.2.6
-bibtexparser==1.4.0
-bidict==0.22.0
-bitstring==4.0.2
-black==22.12.0
-bleach==6.0.0
-bleak==0.20.2
-bleak-sigspec==0.0.4
-blinker==1.4
-boltons==23.0.0
-boto3==1.20.54
-botocore==1.23.54
-bottle==0.12.23
-bpytop==1.0.68
-breadability==0.1.20
-Brlapi==0.8.3
-Brotli==1.0.9
-cachetools==5.3.1
-cachier==2.0.0
-cassandra-driver==3.25.0
-certifi==2022.12.7
-cffi==1.15.1
-cfgv==3.3.1
-chardet==4.0.0
-charset-normalizer==2.0.6
-chevron==0.14.0
-chrome-gnome-shell==0.0.0
-ci-info==0.3.0
-click==8.1.3
-click-didyoumean==0.3.0
-CoAPthon==4.0.2
-colorama==0.4.4
-comm==0.1.2
-command-not-found==0.3
-commentjson==0.9.0
-configobj==5.0.8
-configparser==5.3.0
-confluent-kafka==2.0.2
-contourpy==1.0.7
-CouchDB==1.2
-cryptography==3.4.8
-cupshelpers==1.0
-curlify==2.2.1
-cycler==0.11.0
-dataclasses-json==0.5.7
-dbus-fast==1.90.1
-dbus-python==1.2.18
-debugpy==1.6.6
-decorator==5.1.1
-defer==1.0.6
-defusedxml==0.7.1
-Deprecated==1.2.14
-dill==0.3.7
-distlib==0.3.6
-distro==1.7.0
-distro-info==1.1+ubuntu0.1
-dnspython==2.2.1
-docker==5.0.3
-dockerpty==0.4.1
-docopt==0.6.2
-docutils==0.19
-docwriter==1.3.2
-dpath==1.5.0
-duplicity==0.8.21
-easyeda2kicad==0.6.2
-ecdsa==0.18.0
-elastic-transport==8.4.0
-elasticsearch==8.5.3
-email-validator==1.3.0
-entrypoints==0.4
-esptool==4.6.2
-etelemetry==0.3.0
-euclid3==0.1
-eventlet==0.33.0
-exceptiongroup==1.1.2
-executing==1.2.0
-faiss-cpu==1.7.4
-fastapi==0.95.1
-fasteners==0.14.1
-fastjsonschema==2.16.3
-ffmpy==0.3.0
-filelock==3.6.0
-FITX==1.0.1
-fitz==0.0.1.dev2
-flake8==6.0.0
-Flask==2.1.3
-Flask-Babel==2.0.0
-Flask-Compress==1.13
-Flask-Gravatar==0.5.0
-Flask-Login==0.6.2
-Flask-Mail==0.9.1
-Flask-Migrate==3.1.0
-Flask-Paranoid==0.3.0
-Flask-Principal==0.4.0
-Flask-Security-Too==4.1.5
-Flask-SocketIO==5.2.0
-Flask-SQLAlchemy==2.5.1
-Flask-WTF==1.0.1
-flatbuffers==23.1.4
-fonttools==4.38.0
-fqdn==1.5.1
-frontend==0.0.3
-frozenlist==1.3.3
-fsspec==2023.4.0
-future==0.18.2
-gast==0.4.0
-geomet==0.2.1.post1
-ghp-import==2.1.0
-gitdb==4.0.10
-GitPython==3.1.31
-Glances==3.3.0.4
-google-auth==2.15.0
-google-auth-oauthlib==0.4.6
-google-pasta==0.2.0
-gpg==1.16.0
-gradio==3.28.0
-gradio_client==0.1.4
-graphitesender==0.11.2
-graphql-core==3.2.3
-greenlet==2.0.1
-grpcio==1.51.1
-h11==0.14.0
-h2==4.1.0
-h5py==3.7.0
-hpack==4.0.0
-httpagentparser==1.9.5
-httpcore==0.16.3
-httpie==2.6.0
-httplib2==0.20.2
-httpx==0.23.3
-huggingface-hub==0.14.1
-hyperframe==6.0.1
-hypothesis==6.82.0
-hypothesis-graphql==0.10.0
-hypothesis-jsonschema==0.22.1
-identify==2.5.23
-idna==3.3
-ifaddr==0.2.0
-importlib-metadata==4.6.4
-influxdb==5.3.1
-influxdb-client==1.35.0
-iniconfig==2.0.0
-ipykernel==6.21.2
-ipython==8.8.0
-ipython-genutils==0.2.0
-isodate==0.6.1
-isoduration==20.11.0
-isort==5.12.0
-itsdangerous==2.1.2
-jedi==0.18.2
-jeepney==0.7.1
-Jinja2==3.1.2
-jmespath==0.10.0
-joblib==1.2.0
-json5==0.9.11
-jsonpointer==2.3
-jsonschema==3.2.0
-jsonschema-specifications==2023.7.1
-junit-xml==1.9
-jupyter-events==0.6.3
-jupyter-server==1.23.6
-jupyter-ydoc==0.2.2
-jupyter_client==7.4.1
-jupyter_core==5.2.0
-jupyter_server_fileid==0.8.0
-jupyter_server_terminals==0.4.4
-jupyter_server_ydoc==0.6.1
-jupyterlab==3.6.1
-jupyterlab-pygments==0.2.2
-jupyterlab_server==2.19.0
-kafka-python==2.0.2
-kaggle==1.5.12
-keras==2.11.0
-keyring==23.5.0
-KiKit @ git+https://github.com/yaqwsx/KiKit@072bb845645452a5027cb27072d43ded3da18fa0
-kiwisolver==1.4.4
-langchain==0.0.152
-language-selector==0.1
-lark-parser==0.7.8
-launchpadlib==1.10.16
-lazr.restfulclient==0.14.4
-lazr.uri==1.0.6
-ldap3==2.9.1
-libclang==14.0.6
-libcst==0.4.9
-libvirt-python==8.0.0
-linkify-it-py==2.0.0
-lockfile==0.12.2
-loguru==0.6.0
-looseversion==1.1.2
-louis==3.20.0
-lxml==4.9.2
-macaroonbakery==1.3.1
-mailbits==0.2.1
-Mako==1.1.3
-Markdown==3.3.6
-markdown-it-py==2.2.0
-markdown2==2.4.6
-markdownify==0.11.6
-MarkupSafe==2.1.2
-marshmallow==3.19.0
-marshmallow-enum==1.5.1
-matplotlib==3.7.0
-matplotlib-inline==0.1.6
-mccabe==0.7.0
-mdit-py-plugins==0.3.3
-mdurl==0.1.2
-mergedeep==1.3.4
-micropy-cli==4.2.1
-micropython-stubber==1.13.7
-mistune==2.0.5
-mkdocs==1.5.2
-mkdocs-material==7.1.9
-mkdocs-material-extensions==1.1.1
-monotonic==1.6
-more-itertools==8.10.0
-mpmath==1.2.1
-msal==1.20.0
-msal-extensions==0.3.1
-msrest==0.7.1
-multidict==6.0.4
-mypy==1.2.0
-mypy-extensions==1.0.0
-nbclassic==0.5.2
-nbclient==0.7.2
-nbconvert==7.2.9
-nbformat==5.7.3
-nest-asyncio==1.5.6
-netifaces==0.11.0
-networkx==3.1
-nibabel==5.1.0
-nipype==1.8.6
-nltk==3.8.1
-nodeenv==1.7.0
-notebook==6.5.2
-notebook_shim==0.2.2
-numexpr==2.8.4
-numpy==1.21.5
-nvidia-cublas-cu11==11.10.3.66
-nvidia-cuda-nvrtc-cu11==11.7.99
-nvidia-cuda-runtime-cu11==11.7.99
-nvidia-cudnn-cu11==8.5.0.96
-oauthlib==3.2.0
-olefile==0.46
-openai==0.27.2
-openapi-schema-pydantic==1.2.4
-opt-einsum==3.3.0
-orjson==3.8.11
-outcome==1.2.0
-packaging==21.3
-paho-mqtt==1.6.1
-pandas==2.0.1
-pandocfilters==1.5.0
-paramiko==2.9.3
-parso==0.8.3
-passlib==1.7.4
-pathlib==1.0.1
-pathspec==0.11.2
-pathtools==0.1.2
-pbkdf2==1.3
-pcbnewTransition==0.3.4
-pexpect==4.8.0
-pgadmin4==6.18
-pickleshare==0.7.5
-pika==1.3.1
-Pillow==9.0.1
-pipx==1.2.0
-pkginfo==1.9.6
-platformdirs==2.6.2
-platformio==6.1.9
-pluggy==1.2.0
-ply==3.11
-portalocker==2.6.0
-potsdb==1.0.3
-pre-commit==3.2.2
-prettytable==0.7.2
-prometheus-client==0.15.0
-prompt-toolkit==3.0.36
-protobuf==4.22.3
-prov==2.0.0
-psutil==5.9.3
-psycopg2-binary==2.9.5
-ptyprocess==0.7.0
-pure-eval==0.2.2
-py3nvml==0.2.7
-pyasn1==0.4.8
-pyasn1-modules==0.2.8
-pybars3==0.9.7
-pycairo==1.20.1
-pycodestyle==2.10.0
-pycountry==22.3.5
-pycparser==2.21
-pycryptodomex==3.16.0
-pycups==2.0.1
-pydantic==1.10.7
-pydot==1.4.2
-pydub==0.25.1
-pyelftools==0.29
-pyflakes==3.0.1
-pygal==3.0.0
-PyGithub==1.59.1
-Pygments==2.14.0
-PyGObject==3.42.1
-PyJWT==2.8.0
-pymacaroons==0.13.0
-pymdown-extensions==9.9.2
-pymdstat==0.4.2
-PyMeta3==0.5.1
-PyNaCl==1.5.0
-pyotp==2.8.0
-pyparsing==2.4.7
-PyPDF2==3.0.1
-pypi-simple==1.1.0
-pypng==0.0.19
-PyQt5==5.15.6
-PyQt5-sip==12.9.1
-pyrate-limiter==2.10.0
-pyRFC3339==1.1
-pyright==1.1.320
-pyrsistent==0.18.1
-pyserial==3.5
-pysmi==0.3.4
-pysnmp==4.4.12
-PySocks==1.7.1
-pysondb-v2==2.1.0
-pyte==0.8.1
-pytest==7.4.0
-pytest-subtests==0.7.0
-python-apt==2.4.0+ubuntu2
-python-dateutil==2.8.2
-python-debian==0.1.43+ubuntu1.1
-python-dotenv==0.21.1
-python-engineio==4.3.4
-python-json-logger==2.0.7
-python-minifier==2.9.0
-python-multipart==0.0.6
-python-nmap==0.7.1
-python-slugify==8.0.1
-python-socketio==5.7.2
-python-telegram-bot==20.1
-pytils==0.4.1
-pytz==2021.3
-pyudev==0.24.1
-pyxdg==0.27
-pyxnat==1.5
-PyYAML==5.4.1
-pyyaml_env_tag==0.1
-pyzmq==24.0.1
-qrcode==7.3.1
-questionary==1.10.0
-rdflib==6.3.2
-reactivex==4.0.4
-readme-renderer==37.3
-reedsolo==1.7.0
-referencing==0.30.2
-regex==2022.10.31
-reportlab==3.6.8
-requests==2.30.0
-requests-oauthlib==1.3.1
-requests-toolbelt==0.9.1
-requirements-parser==0.2.0
-resolvelib==0.8.1
-rfc3339-validator==0.1.4
-rfc3986==1.5.0
-rfc3986-validator==0.1.1
-rich==13.3.2
-rpds-py==0.9.2
-rsa==4.9
-rshell==0.0.31
-ruff==0.0.256
-s3transfer==0.5.2
-safetensors==0.3.1
-scandir==1.10.0
-scikit-learn==1.2.2
-scipy==1.10.0
-SecretStorage==3.3.1
-semantic-version==2.10.0
-Send2Trash==1.8.0
-shapely==2.0.0
-shellingham==1.5.0.post1
-simplejson==3.18.0
-six==1.16.0
-smmap==5.0.0
-sniffio==1.3.0
-solidpython==1.1.3
-sortedcontainers==2.4.0
-soupsieve==2.3.2.post1
-speaklater3==1.4
-SQLAlchemy==1.4.45
-sqlparse==0.4.3
-sshtunnel==0.4.0
-stack-data==0.6.2
-starlette==0.28.0
-starlette-testclient==0.2.0
-statsd==4.0.1
-sumy==0.11.0
-svg2mod==0.1.0
-sympy==1.11.1
-systemd-python==234
-tabulate==0.9.0
-tenacity==8.2.2
-tensorboard==2.11.0
-tensorboard-data-server==0.6.1
-tensorboard-plugin-wit==1.8.1
-tensorflow==2.11.0
-tensorflow-estimator==2.11.0
-tensorflow-hub==0.13.0
-tensorflow-io-gcs-filesystem==0.29.0
-termcolor==2.2.0
-terminado==0.17.1
-text-unidecode==1.3
-texttable==1.6.4
-thefuck==3.32
-threadpoolctl==3.1.0
-tiktoken==0.3.3
-tinycss2==1.2.1
-tokenizers==0.13.3
-tomli==2.0.1
-tomli_w==1.0.0
-tools==0.1.9
-toolz==0.12.0
-torch==1.13.1
-tornado==6.2
-tqdm==4.65.0
-traitlets==5.8.1
-traits==6.3.2
-transformers==4.31.0
-trio==0.22.1
-trio-websocket==0.9.2
-tweepy==4.13.0
-twilio==8.0.0
-twine==4.0.2
-typed-config==1.3.2
-typer==0.9.0
-typing-inspect==0.8.0
-typing_extensions==4.5.0
-tzdata==2023.3
-ua-parser==0.16.1
-ubuntu-advantage-tools==8001
-ubuntu-drivers-common==0.0.0
-uc-micro-py==1.0.1
-ufw==0.36.1
-unattended-upgrades==0.1
-Unidecode==1.3.6
-unsync==1.4.0
-upydevice==0.3.8
-uri-template==1.2.0
-urllib3==1.26.5
-usb-creator==0.3.7
-user-agents==2.2.0
-userpath==1.9.0
-uvicorn==0.22.0
-vboxapi==1.0
-virtualenv==20.13.0+ds
-voila==0.4.0
-wadllib==1.3.6
-wakatime==14.0.1
-watchdog==2.2.1
-wcwidth==0.2.5
-webcolors==1.12
-webencodings==0.5.1
-websocket-client==0.59.0
-websockets==10.4
-websockets-cli==0.2.1
-Werkzeug==2.1.2
-wifi==0.3.8
-WoeUSB-ng==0.2.12
-wrapt==1.14.1
-wsproto==1.2.0
-WTForms==3.0.1
-wxPython==4.2.0
-wxwidgets==1.0.5
-xdg==5
-xgboost==1.7.2
-xkit==0.0.0
-xmltodict==0.13.0
-y-py==0.5.9
-yarl==1.8.2
-ypy-websocket==0.8.2
-zeroconf==0.47.1
-zipp==1.0.0
+adafruit-ampy
+ansible
+apturl
+asciinema
+autopep8
+backoff
+bernhard
+bibtexparser
+bpytop
+brlapi
+cassandra-driver
+chevron
+chrome-gnome-shell
+coapthon
+command-not-found
+confluent-kafka
+couchdb
+cupshelpers
+curlify
+dbus-python
+defer
+distro
+distro-info
+docker
+dockerpty
+docwriter
+duplicity
+easyeda2kicad
+elasticsearch
+esptool
+faiss-cpu
+fasteners
+fitx
+fitz
+flake8
+fqdn
+frontend
+glances
+gpg
+gradio
+graphitesender
+h2
+httpie
+hypothesis-graphql
+hypothesis-jsonschema
+influxdb
+influxdb-client
+isoduration
+isort
+jeepney
+jsonpointer
+jsonschema-specifications
+junit-xml
+jupyter-server-terminals
+jupyterlab
+kafka-python
+kaggle
+kikit
+langchain
+language-selector
+launchpadlib
+libvirt-python
+linkify-it-py
+lockfile
+louis
+macaroonbakery
+markdownify
+micropy-cli
+monotonic
+more-itertools
+olefile
+openai
+paho-mqtt
+pgadmin4
+pika
+pip-chill
+pip-tools
+pipreqs
+platformio
+potsdb
+pre-commit
+py3nvml
+pycups
+pygal
+pygobject
+pymacaroons
+pymdstat
+pypdf2
+pyqt5
+pyrate-limiter
+pyrfc3339
+pysnmp
+pysocks
+pytest-subtests
+python-apt
+python-debian
+python-telegram-bot
+pyxdg
+reportlab
+ruff
+scandir
+scikit-learn
+secretstorage
+starlette-testclient
+statsd
+sumy
+svg2mod
+sympy
+systemd-python
+tensorflow
+tensorflow-hub
+texttable
+thefuck
+tiktoken
+tools
+torch
+transformers
+tweepy
+twilio
+twine
+ubuntu-advantage-tools
+ubuntu-drivers-common
+ufw
+unattended-upgrades
+unidecode
+uri-template
+usb-creator
+vboxapi
+voila
+wadllib
+wakatime
+websockets-cli
+wifi
+woeusb-ng
+wxwidgets
+xdg
+xgboost
+xkit
+zeroconf
+zipp
+# absl-py # Installed as dependency for tensorboard, tensorflow
+# aiofiles # Installed as dependency for frontend, gradio, platformio, ypy-websocket
+# aiohttp # Installed as dependency for aiohttp-retry, gradio, langchain, openai, twilio
+# aiohttp-retry # Installed as dependency for twilio
+# aiosignal # Installed as dependency for aiohttp
+# aiosqlite # Installed as dependency for ypy-websocket
+# ajsonrpc # Installed as dependency for platformio
+# alembic # Installed as dependency for flask-migrate
+# altair # Installed as dependency for gradio
+# ansible-core # Installed as dependency for ansible
+# anyio # Installed as dependency for httpcore, jupyter-server, starlette
+# argcomplete # Installed as dependency for pipx
+# argon2-cffi # Installed as dependency for jupyter-server, nbclassic, notebook
+# argon2-cffi-bindings # Installed as dependency for argon2-cffi
+# arrow # Installed as dependency for isoduration
+# asttokens # Installed as dependency for stack-data
+# astunparse # Installed as dependency for tensorflow
+# async-generator # Installed as dependency for trio-websocket
+# async-timeout # Installed as dependency for aiohttp, bleak, langchain, zeroconf
+# asyncio # Installed as dependency for twilio
+# attrs # Installed as dependency for aiohttp, hypothesis, jsonschema, mailbits, micropy-cli, outcome, referencing, trio
+# authlib # Installed as dependency for pgadmin4
+# autoflake # Installed as dependency for micropython-stubber
+# azure-common # Installed as dependency for azure-mgmt-rdbms, azure-mgmt-resource, azure-mgmt-subscription
+# azure-core # Installed as dependency for azure-identity, azure-mgmt-core, msrest
+# azure-identity # Installed as dependency for pgadmin4
+# azure-mgmt-core # Installed as dependency for azure-mgmt-rdbms, azure-mgmt-resource, azure-mgmt-subscription
+# azure-mgmt-rdbms # Installed as dependency for pgadmin4
+# azure-mgmt-resource # Installed as dependency for pgadmin4
+# azure-mgmt-subscription # Installed as dependency for pgadmin4
+# babel # Installed as dependency for flask-babel, jupyterlab-server
+# backcall # Installed as dependency for ipython
+# bcrypt # Installed as dependency for pgadmin4
+# beautifulsoup4 # Installed as dependency for markdownify, nbconvert, pypi-simple
+# bidict # Installed as dependency for python-socketio
+# bitstring # Installed as dependency for esptool
+# black # Installed as dependency for micropython-stubber
+# bleach # Installed as dependency for nbconvert, readme-renderer
+# bleak # Installed as dependency for bleak-sigspec, upydevice
+# bleak-sigspec # Installed as dependency for upydevice
+# blinker # Installed as dependency for flask-mail, flask-principal, flask-security-too
+# boltons # Installed as dependency for micropy-cli
+# boto3 # Installed as dependency for pgadmin4
+# botocore # Installed as dependency for boto3, pgadmin4, s3transfer
+# bottle # Installed as dependency for platformio
+# breadability # Installed as dependency for sumy
+# brotli # Installed as dependency for flask-compress
+# build # Installed as dependency for pip-tools
+# cachetools # Installed as dependency for google-auth, micropython-stubber
+# cachier # Installed as dependency for micropy-cli
+# certifi # Installed as dependency for elastic-transport, httpcore, httpx, influxdb-client, kaggle, msrest, requests, websockets-cli
+# cffi # Installed as dependency for argon2-cffi-bindings, pynacl
+# cfgv # Installed as dependency for pre-commit
+# chardet # Installed as dependency for breadability
+# charset-normalizer # Installed as dependency for aiohttp, requests
+# ci-info # Installed as dependency for etelemetry
+# click # Installed as dependency for adafruit-ampy, black, click-didyoumean, flask, geomet, kikit, micropy-cli, micropython-stubber, mkdocs, nipype, nltk, pip-tools, platformio, typer, userpath, uvicorn, websockets-cli
+# click-didyoumean # Installed as dependency for websockets-cli
+# colorama # Installed as dependency for platformio, thefuck
+# comm # Installed as dependency for ipykernel
+# commentjson # Installed as dependency for kikit
+# configobj # Installed as dependency for fitz
+# configparser # Installed as dependency for fitz
+# contourpy # Installed as dependency for matplotlib
+# cryptography # Installed as dependency for ansible-core, authlib, azure-identity, esptool, msal, pgadmin4
+# cycler # Installed as dependency for matplotlib
+# dataclasses-json # Installed as dependency for langchain
+# dbus-fast # Installed as dependency for bleak
+# debugpy # Installed as dependency for ipykernel
+# decorator # Installed as dependency for ipython, thefuck
+# defusedxml # Installed as dependency for glances, nbconvert
+# deprecated # Installed as dependency for pygithub
+# dill # Installed as dependency for upydevice
+# distlib # Installed as dependency for micropy-cli, virtualenv
+# dnspython # Installed as dependency for email-validator, eventlet
+# docopt # Installed as dependency for breadability, pipreqs, sumy
+# docutils # Installed as dependency for readme-renderer
+# dpath # Installed as dependency for micropy-cli
+# ecdsa # Installed as dependency for esptool
+# elastic-transport # Installed as dependency for elasticsearch
+# email-validator # Installed as dependency for flask-security-too
+# entrypoints # Installed as dependency for altair, jupyter-client
+# etelemetry # Installed as dependency for nipype
+# euclid3 # Installed as dependency for solidpython
+# eventlet # Installed as dependency for pgadmin4
+# exceptiongroup # Installed as dependency for hypothesis, pytest, trio
+# executing # Installed as dependency for stack-data
+# fastapi # Installed as dependency for gradio
+# fastjsonschema # Installed as dependency for nbformat
+# ffmpy # Installed as dependency for gradio
+# filelock # Installed as dependency for huggingface-hub, nipype, transformers, virtualenv
+# flask # Installed as dependency for flask-babel, flask-compress, flask-gravatar, flask-login, flask-mail, flask-migrate, flask-paranoid, flask-principal, flask-security-too, flask-socketio, flask-sqlalchemy, flask-wtf, pgadmin4
+# flask-babel # Installed as dependency for pgadmin4
+# flask-compress # Installed as dependency for pgadmin4
+# flask-gravatar # Installed as dependency for pgadmin4
+# flask-login # Installed as dependency for flask-security-too, pgadmin4
+# flask-mail # Installed as dependency for pgadmin4
+# flask-migrate # Installed as dependency for pgadmin4
+# flask-paranoid # Installed as dependency for pgadmin4
+# flask-principal # Installed as dependency for flask-security-too
+# flask-security-too # Installed as dependency for pgadmin4
+# flask-socketio # Installed as dependency for pgadmin4
+# flask-sqlalchemy # Installed as dependency for flask-migrate, pgadmin4
+# flask-wtf # Installed as dependency for flask-security-too, pgadmin4
+# flatbuffers # Installed as dependency for tensorflow
+# fonttools # Installed as dependency for matplotlib
+# frozenlist # Installed as dependency for aiohttp, aiosignal
+# fsspec # Installed as dependency for gradio-client, huggingface-hub
+# future # Installed as dependency for glances, pyxnat
+# gast # Installed as dependency for tensorflow
+# geomet # Installed as dependency for cassandra-driver
+# ghp-import # Installed as dependency for mkdocs
+# gitdb # Installed as dependency for gitpython
+# gitpython # Installed as dependency for micropy-cli
+# google-auth # Installed as dependency for google-auth-oauthlib, tensorboard
+# google-auth-oauthlib # Installed as dependency for tensorboard
+# google-pasta # Installed as dependency for tensorflow
+# gradio-client # Installed as dependency for gradio
+# graphql-core # Installed as dependency for hypothesis-graphql
+# greenlet # Installed as dependency for eventlet, sqlalchemy
+# grpcio # Installed as dependency for tensorboard, tensorflow
+# h11 # Installed as dependency for httpcore, uvicorn, wsproto
+# h5py # Installed as dependency for tensorflow
+# hpack # Installed as dependency for h2
+# httpagentparser # Installed as dependency for pgadmin4
+# httpcore # Installed as dependency for httpx
+# httplib2 # Installed as dependency for fitz, launchpadlib, lazr.restfulclient
+# httpx # Installed as dependency for gradio, gradio-client, python-telegram-bot
+# huggingface-hub # Installed as dependency for gradio, gradio-client, transformers
+# hyperframe # Installed as dependency for h2
+# hypothesis # Installed as dependency for hypothesis-graphql, hypothesis-jsonschema
+# identify # Installed as dependency for pre-commit
+# idna # Installed as dependency for anyio, email-validator, requests, trio, yarl
+# ifaddr # Installed as dependency for zeroconf
+# importlib-metadata # Installed as dependency for twine
+# iniconfig # Installed as dependency for pytest
+# ipykernel # Installed as dependency for nbclassic, notebook
+# ipython # Installed as dependency for ipykernel, jupyterlab
+# ipython-genutils # Installed as dependency for nbclassic, notebook
+# isodate # Installed as dependency for msrest, rdflib
+# itsdangerous # Installed as dependency for flask, flask-security-too, flask-wtf, frontend
+# jedi # Installed as dependency for ipython
+# jinja2 # Installed as dependency for altair, ansible-core, flask, flask-babel, gradio, jupyter-server, jupyterlab, jupyterlab-server, micropy-cli, mkdocs, nbclassic, nbconvert, notebook
+# jmespath # Installed as dependency for boto3, botocore
+# joblib # Installed as dependency for nltk, scikit-learn
+# json5 # Installed as dependency for jupyterlab-server
+# jsonschema # Installed as dependency for altair, hypothesis-jsonschema, jupyter-events, jupyterlab-server, micropy-cli, nbformat
+# jupyter-client # Installed as dependency for ipykernel, jupyter-server, nbclassic, nbclient, notebook, voila
+# jupyter-core # Installed as dependency for ipykernel, jupyter-client, jupyter-server, jupyterlab, nbclassic, nbclient, nbconvert, nbformat, notebook, voila
+# jupyter-events # Installed as dependency for jupyter-server-fileid
+# jupyter-server # Installed as dependency for jupyter-server-fileid, jupyterlab, jupyterlab-server, nbclassic, notebook-shim, voila
+# jupyter-server-fileid # Installed as dependency for jupyter-server-ydoc
+# jupyter-server-ydoc # Installed as dependency for jupyterlab
+# jupyter-ydoc # Installed as dependency for jupyter-server-ydoc, jupyterlab
+# jupyterlab-pygments # Installed as dependency for nbconvert
+# jupyterlab-server # Installed as dependency for jupyterlab, voila
+# keras # Installed as dependency for tensorflow
+# keyring # Installed as dependency for launchpadlib, twine
+# kiwisolver # Installed as dependency for matplotlib
+# lark-parser # Installed as dependency for commentjson
+# lazr.restfulclient # Installed as dependency for launchpadlib
+# lazr.uri # Installed as dependency for launchpadlib
+# ldap3 # Installed as dependency for pgadmin4
+# libclang # Installed as dependency for tensorflow
+# libcst # Installed as dependency for micropy-cli, micropython-stubber
+# loguru # Installed as dependency for micropython-stubber
+# looseversion # Installed as dependency for nipype
+# lxml # Installed as dependency for breadability, prov, pyxnat, tools
+# mailbits # Installed as dependency for pypi-simple
+# mako # Installed as dependency for alembic
+# markdown # Installed as dependency for mkdocs, mkdocs-material, pymdown-extensions, tensorboard
+# markdown-it-py # Installed as dependency for gradio, mdit-py-plugins, rich
+# markdown2 # Installed as dependency for kikit
+# markupsafe # Installed as dependency for gradio, jinja2, micropy-cli, mkdocs, nbconvert, wtforms
+# marshmallow # Installed as dependency for dataclasses-json, marshmallow-enum, platformio
+# marshmallow-enum # Installed as dependency for dataclasses-json
+# matplotlib # Installed as dependency for gradio
+# matplotlib-inline # Installed as dependency for ipykernel, ipython
+# mccabe # Installed as dependency for flake8
+# mdit-py-plugins # Installed as dependency for gradio
+# mdurl # Installed as dependency for markdown-it-py
+# mergedeep # Installed as dependency for mkdocs
+# micropython-stubber # Installed as dependency for micropy-cli
+# mistune # Installed as dependency for docwriter, nbconvert
+# mkdocs # Installed as dependency for docwriter, mkdocs-material
+# mkdocs-material # Installed as dependency for docwriter
+# mkdocs-material-extensions # Installed as dependency for mkdocs-material
+# mpmath # Installed as dependency for sympy
+# msal # Installed as dependency for azure-identity, msal-extensions
+# msal-extensions # Installed as dependency for azure-identity
+# msgpack # Installed as dependency for influxdb
+# msrest # Installed as dependency for azure-mgmt-rdbms, azure-mgmt-resource, azure-mgmt-subscription
+# multidict # Installed as dependency for aiohttp, yarl
+# mypy # Installed as dependency for micropy-cli, micropython-stubber
+# mypy-extensions # Installed as dependency for black, mypy, typing-inspect
+# nbclassic # Installed as dependency for jupyterlab, notebook
+# nbclient # Installed as dependency for nbconvert, voila
+# nbconvert # Installed as dependency for jupyter-server, nbclassic, notebook, voila
+# nbformat # Installed as dependency for jupyter-server, nbclassic, nbclient, nbconvert, notebook
+# nest-asyncio # Installed as dependency for ipykernel, jupyter-client, nbclassic, notebook
+# netifaces # Installed as dependency for upydevice
+# networkx # Installed as dependency for nipype, prov
+# nibabel # Installed as dependency for fitz, nipype
+# nipype # Installed as dependency for fitz
+# nltk # Installed as dependency for sumy
+# nodeenv # Installed as dependency for pre-commit, pyright
+# notebook # Installed as dependency for jupyterlab
+# notebook-shim # Installed as dependency for nbclassic
+# numexpr # Installed as dependency for langchain
+# numpy # Installed as dependency for altair, contourpy, fitx, fitz, gradio, h5py, kikit, langchain, matplotlib, nibabel, nipype, numexpr, opt-einsum, pandas, scikit-learn, scipy, shapely, tensorboard, tensorflow, tensorflow-hub, transformers, xgboost
+# nvidia-cublas-cu11 # Installed as dependency for nvidia-cudnn-cu11, torch
+# nvidia-cuda-nvrtc-cu11 # Installed as dependency for torch
+# nvidia-cuda-runtime-cu11 # Installed as dependency for torch
+# nvidia-cudnn-cu11 # Installed as dependency for torch
+# oauthlib # Installed as dependency for requests-oauthlib, tweepy
+# openapi-schema-pydantic # Installed as dependency for langchain
+# opt-einsum # Installed as dependency for tensorflow
+# orjson # Installed as dependency for gradio
+# outcome # Installed as dependency for trio
+# packaging # Installed as dependency for ansible-core, build, glances, gradio-client, huggingface-hub, ipykernel, jupyter-server, jupyterlab, jupyterlab-server, marshmallow, matplotlib, micropy-cli, micropython-stubber, mkdocs, nbconvert, nibabel, nipype, pipx, pypi-simple, pytest, tensorflow, transformers
+# pandas # Installed as dependency for altair, fitz, gradio
+# pandocfilters # Installed as dependency for nbconvert
+# paramiko # Installed as dependency for sshtunnel
+# parso # Installed as dependency for jedi
+# passlib # Installed as dependency for flask-security-too, pgadmin4
+# pathlib # Installed as dependency for pyxnat
+# pathspec # Installed as dependency for black, mkdocs
+# pathtools # Installed as dependency for cachier
+# pbkdf2 # Installed as dependency for wifi
+# pcbnewtransition # Installed as dependency for kikit
+# pexpect # Installed as dependency for ipython
+# pickleshare # Installed as dependency for ipython
+# pillow # Installed as dependency for gradio, matplotlib, pgadmin4
+# pip # Installed as dependency for pip-tools
+# pipx # Installed as dependency for micropython-stubber
+# pkginfo # Installed as dependency for twine
+# platformdirs # Installed as dependency for black, jupyter-core, mkdocs, virtualenv
+# pluggy # Installed as dependency for pytest
+# ply # Installed as dependency for pysmi, solidpython
+# portalocker # Installed as dependency for cachier, msal-extensions
+# prettytable # Installed as dependency for solidpython
+# prometheus-client # Installed as dependency for jupyter-server, nbclassic, notebook
+# prompt-toolkit # Installed as dependency for ipython, questionary, websockets-cli
+# protobuf # Installed as dependency for bernhard, tensorboard, tensorflow, tensorflow-hub
+# prov # Installed as dependency for nipype
+# psutil # Installed as dependency for bpytop, glances, ipykernel, pgadmin4, thefuck
+# psycopg2-binary # Installed as dependency for pgadmin4
+# ptyprocess # Installed as dependency for terminado
+# pure-eval # Installed as dependency for stack-data
+# pyasn1 # Installed as dependency for ldap3, pyasn1-modules, pysnmp, rsa
+# pyasn1-modules # Installed as dependency for google-auth
+# pybars3 # Installed as dependency for kikit
+# pycairo # Installed as dependency for pygobject
+# pycodestyle # Installed as dependency for autopep8, flake8
+# pycountry # Installed as dependency for sumy
+# pycparser # Installed as dependency for cffi
+# pycryptodomex # Installed as dependency for pysnmp
+# pydantic # Installed as dependency for easyeda2kicad, fastapi, gradio, langchain, micropy-cli, openapi-schema-pydantic, pypi-simple, websockets-cli
+# pydot # Installed as dependency for nipype
+# pydub # Installed as dependency for gradio
+# pyelftools # Installed as dependency for platformio
+# pyflakes # Installed as dependency for autoflake, flake8
+# pygithub # Installed as dependency for micropython-stubber
+# pygments # Installed as dependency for ipython, mkdocs-material, nbconvert, readme-renderer, rich
+# pyjwt # Installed as dependency for msal, pygithub, twilio
+# pymdown-extensions # Installed as dependency for mkdocs-material
+# pymeta3 # Installed as dependency for pybars3
+# pynacl # Installed as dependency for pygithub
+# pyotp # Installed as dependency for pgadmin4
+# pyparsing # Installed as dependency for bibtexparser, httplib2, matplotlib, packaging, pydot, rdflib
+# pypi-simple # Installed as dependency for micropython-stubber
+# pypng # Installed as dependency for solidpython
+# pyproject-hooks # Installed as dependency for build
+# pyqt5-sip # Installed as dependency for pyqt5
+# pyright # Installed as dependency for micropython-stubber
+# pyrsistent # Installed as dependency for jsonschema
+# pyserial # Installed as dependency for adafruit-ampy, esptool, platformio, rshell, upydevice
+# pysmi # Installed as dependency for pysnmp
+# pysondb-v2 # Installed as dependency for micropython-stubber
+# pyte # Installed as dependency for thefuck
+# pytest # Installed as dependency for pytest-subtests
+# python-dateutil # Installed as dependency for arrow, botocore, ghp-import, influxdb, influxdb-client, jupyter-client, kaggle, matplotlib, nipype, pandas, pgadmin4, prov
+# python-dotenv # Installed as dependency for adafruit-ampy, websockets-cli
+# python-engineio # Installed as dependency for python-socketio
+# python-json-logger # Installed as dependency for jupyter-events
+# python-minifier # Installed as dependency for micropy-cli, micropython-stubber
+# python-multipart # Installed as dependency for gradio
+# python-nmap # Installed as dependency for upydevice
+# python-slugify # Installed as dependency for kaggle
+# python-socketio # Installed as dependency for flask-socketio
+# pytils # Installed as dependency for tools
+# pytz # Installed as dependency for babel, flask-babel, influxdb, pandas, pgadmin4, twilio
+# pyudev # Installed as dependency for rshell
+# pyxnat # Installed as dependency for fitz
+# pyyaml # Installed as dependency for ansible-core, docwriter, esptool, gradio, huggingface-hub, jupyter-events, langchain, libcst, mkdocs, pre-commit, pyyaml-env-tag, transformers
+# pyyaml-env-tag # Installed as dependency for mkdocs
+# pyzmq # Installed as dependency for ipykernel, jupyter-client, jupyter-server, nbclassic, notebook
+# qrcode # Installed as dependency for pgadmin4
+# questionary # Installed as dependency for micropy-cli
+# rdflib # Installed as dependency for nipype, prov
+# reactivex # Installed as dependency for influxdb-client
+# readme-renderer # Installed as dependency for twine
+# reedsolo # Installed as dependency for esptool
+# referencing # Installed as dependency for jsonschema-specifications
+# regex # Installed as dependency for nltk, tiktoken, transformers
+# requests # Installed as dependency for azure-core, curlify, easyeda2kicad, etelemetry, gradio, gradio-client, huggingface-hub, influxdb, jupyterlab-server, kaggle, langchain, micropy-cli, micropython-stubber, msal, msrest, openai, pgadmin4, platformio, pygithub, pypi-simple, pyxnat, requests-oauthlib, starlette-testclient, sumy, tensorboard, tiktoken, transformers, tweepy, twilio, twine, yarg
+# requests-oauthlib # Installed as dependency for google-auth-oauthlib, msrest, tweepy
+# requests-toolbelt # Installed as dependency for twine
+# requirements-parser # Installed as dependency for micropy-cli
+# resolvelib # Installed as dependency for ansible-core
+# rfc3339-validator # Installed as dependency for jupyter-events
+# rfc3986 # Installed as dependency for httpx, twine
+# rfc3986-validator # Installed as dependency for jupyter-events
+# rich # Installed as dependency for twine, websockets-cli
+# rpds-py # Installed as dependency for referencing
+# rsa # Installed as dependency for google-auth
+# rshell # Installed as dependency for micropy-cli
+# s3transfer # Installed as dependency for boto3
+# safetensors # Installed as dependency for transformers
+# scipy # Installed as dependency for fitz, nipype, scikit-learn, xgboost
+# semantic-version # Installed as dependency for gradio, platformio
+# send2trash # Installed as dependency for jupyter-server, nbclassic, notebook
+# setuptools # Installed as dependency for influxdb-client, jsonschema, nodeenv, nvidia-cublas-cu11, nvidia-cuda-runtime-cu11, pip-tools, pycountry, tensorboard, tensorflow, wifi
+# shapely # Installed as dependency for kikit
+# shellingham # Installed as dependency for websockets-cli
+# simplejson # Installed as dependency for nipype, pgadmin4
+# six # Installed as dependency for asttokens, astunparse, azure-core, azure-identity, bleach, cassandra-driver, configobj, ecdsa, eventlet, geomet, google-auth, google-pasta, influxdb, isodate, jsonschema, junit-xml, kaggle, launchpadlib, markdownify, python-dateutil, pyxnat, rfc3339-validator, tensorflow, thefuck, tools, virtualenv, websocket-client
+# smmap # Installed as dependency for gitdb
+# sniffio # Installed as dependency for anyio, httpcore, httpx, trio
+# solidpython # Installed as dependency for kikit
+# sortedcontainers # Installed as dependency for hypothesis, trio
+# soupsieve # Installed as dependency for beautifulsoup4
+# speaklater3 # Installed as dependency for pgadmin4
+# sqlalchemy # Installed as dependency for alembic, flask-sqlalchemy, langchain, pgadmin4
+# sqlparse # Installed as dependency for pgadmin4
+# sshtunnel # Installed as dependency for pgadmin4
+# stack-data # Installed as dependency for ipython
+# starlette # Installed as dependency for fastapi, frontend, platformio, starlette-testclient
+# tabulate # Installed as dependency for micropython-stubber, platformio
+# tenacity # Installed as dependency for langchain, micropython-stubber
+# tensorboard # Installed as dependency for tensorflow
+# tensorboard-data-server # Installed as dependency for tensorboard
+# tensorboard-plugin-wit # Installed as dependency for tensorboard
+# tensorflow-estimator # Installed as dependency for tensorflow
+# tensorflow-io-gcs-filesystem # Installed as dependency for tensorflow
+# termcolor # Installed as dependency for tensorflow, woeusb-ng
+# terminado # Installed as dependency for jupyter-server, jupyter-server-terminals, nbclassic, notebook
+# text-unidecode # Installed as dependency for python-slugify
+# threadpoolctl # Installed as dependency for scikit-learn
+# tinycss2 # Installed as dependency for nbconvert
+# tokenizers # Installed as dependency for transformers
+# tomli # Installed as dependency for autoflake, autopep8, black, build, jupyterlab, micropython-stubber, mypy, pip-tools, pyproject-hooks, pytest, websockets-cli
+# tomli-w # Installed as dependency for micropython-stubber
+# toolz # Installed as dependency for altair
+# tornado # Installed as dependency for ipykernel, jupyter-client, jupyter-server, jupyterlab, nbclassic, notebook, terminado
+# tqdm # Installed as dependency for huggingface-hub, kaggle, langchain, micropy-cli, nltk, openai, transformers
+# traitlets # Installed as dependency for comm, ipykernel, ipython, jupyter-client, jupyter-core, jupyter-events, jupyter-server, matplotlib-inline, nbclassic, nbclient, nbconvert, nbformat, notebook, voila
+# traits # Installed as dependency for nipype
+# trio # Installed as dependency for trio-websocket
+# trio-websocket # Installed as dependency for websockets-cli
+# typed-config # Installed as dependency for micropython-stubber
+# typer # Installed as dependency for micropy-cli
+# typing-extensions # Installed as dependency for azure-core, gradio, gradio-client, huggingface-hub, libcst, micropy-cli, mypy, pydantic, reactivex, tensorflow, torch, typer, typing-inspect
+# typing-inspect # Installed as dependency for dataclasses-json, libcst
+# tzdata # Installed as dependency for pandas
+# ua-parser # Installed as dependency for user-agents
+# uc-micro-py # Installed as dependency for linkify-it-py
+# unsync # Installed as dependency for upydevice
+# upydevice # Installed as dependency for micropy-cli
+# urllib3 # Installed as dependency for botocore, elastic-transport, influxdb-client, kaggle, pgadmin4, requests, twine
+# user-agents # Installed as dependency for pgadmin4
+# userpath # Installed as dependency for pipx
+# uvicorn # Installed as dependency for frontend, gradio, platformio
+# virtualenv # Installed as dependency for pre-commit
+# watchdog # Installed as dependency for cachier, mkdocs
+# wcwidth # Installed as dependency for prompt-toolkit, pyte
+# webcolors # Installed as dependency for wxwidgets
+# webencodings # Installed as dependency for bleach, tinycss2
+# websocket-client # Installed as dependency for jupyter-server
+# websockets # Installed as dependency for gradio, gradio-client, voila
+# werkzeug # Installed as dependency for flask, flask-login, pgadmin4, tensorboard
+# wheel # Installed as dependency for astunparse, nvidia-cublas-cu11, nvidia-cuda-runtime-cu11, pip-tools, tensorboard
+# wrapt # Installed as dependency for deprecated, tensorflow
+# wsproto # Installed as dependency for platformio, trio-websocket
+# wtforms # Installed as dependency for flask-wtf, pgadmin4
+# wxpython # Installed as dependency for woeusb-ng, wxwidgets
+# xmltodict # Installed as dependency for py3nvml
+# y-py # Installed as dependency for jupyter-ydoc, ypy-websocket
+# yarg # Installed as dependency for pipreqs
+# yarl # Installed as dependency for aiohttp
+# ypy-websocket # Installed as dependency for jupyter-server-ydoc
