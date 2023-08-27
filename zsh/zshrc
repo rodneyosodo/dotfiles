@@ -86,7 +86,7 @@ plugins=(
   history
   httpie
   minikube
-  wakatime
+  zsh-wakatime
   virtualenv
   zsh-interactive-cd
   zsh-navigation-tools
@@ -101,10 +101,9 @@ eval $(thefuck --alias)
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/tools/Postman/app
 export PATH=$PATH:/home/r0x6f736f646f/tools/istio-1.17.2/bin
 export GOROOT=/usr/local/go
-source /home/r0x6f736f646f/tools/bash-wakatime/bash-wakatime.sh
+source ~/.wakatime/bash-wakatime/bash-wakatime.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -132,7 +131,7 @@ source /home/r0x6f736f646f/tools/bash-wakatime/bash-wakatime.sh
 alias balena="~/tools/balenaEtcher-1.18.4-x64.AppImage"
 alias upgrade="sudo apt-get update && sudo apt-get upgrade -y && sudo apt auto-remove"
 alias makeclients="make all && make docker_dev"
-alias makeall="make all -j 4 && make dockers_dev -j 4"
+alias makeall="make all -j 8 && make dockers_dev -j 8"
 alias gotidy="go mod tidy && go mod vendor"
 alias mygolangci-lint="golangci-lint run --no-config --disable-all --enable gosimple --enable govet --enable unused --enable misspell --enable revive --enable godot --enable gocritic --enable unconvert --enable whitespace --enable errorlint --enable gomnd --enable nlreturn --timeout 3m"
 alias dockerportainer="docker run -d -p 84:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest"
@@ -149,8 +148,6 @@ compinit
 
 # add Pulumi to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
-
-. /home/r0x6f736f646f/.cli_completions/ws-complete.zsh
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
