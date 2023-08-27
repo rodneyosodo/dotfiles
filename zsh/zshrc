@@ -102,7 +102,10 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:/home/r0x6f736f646f/tools/istio-1.17.2/bin
-export GOROOT=/usr/local/go
+export PATH=$PATH:~/.cargo/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export GOROOT=/usr/lib/go
 source ~/.wakatime/bash-wakatime/bash-wakatime.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -128,11 +131,18 @@ source ~/.wakatime/bash-wakatime/bash-wakatime.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ls=exa
+alias cat=bat
+alias grep=rg
 alias balena="~/tools/balenaEtcher-1.18.4-x64.AppImage"
 alias upgrade="sudo apt-get update && sudo apt-get upgrade -y && sudo apt auto-remove"
 alias makeclients="make all && make docker_dev"
 alias makeall="make all -j 8 && make dockers_dev -j 8"
 alias gotidy="go mod tidy && go mod vendor"
+alias gotest="go test -mod=vendor -v --race -covermode=atomic -coverprofile=cover.out ./..."
+alias gocover="go tool cover -html cover.out -o cover.html"
+alias gobenchprof="go test -mod=vendor -v -bench=. -benchmem -cpuprofile=cpu.prof -memprofile=mem.prof -coverprofile=prof.out ./..."
+alias goprofcpu="go tool pprof -http=:8080 cpu.prof"
 alias mygolangci-lint="golangci-lint run --no-config --disable-all --enable gosimple --enable govet --enable unused --enable misspell --enable revive --enable godot --enable gocritic --enable unconvert --enable whitespace --enable errorlint --enable gomnd --enable nlreturn --timeout 3m"
 alias dockerportainer="docker run -d -p 84:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest"
 alias dockerswagger="docker run -d -p 83:8080 --name swagger --restart=always swaggerapi/swagger-editor"
