@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 docker images --format "{{.Repository}}:{{.Tag}}" >dockerimages.txt
 
 while read line; do

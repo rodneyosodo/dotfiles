@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 docker pull mainflux/smpp-notifier:latest
 docker pull mainflux/smtp-notifier:latest
 docker pull mainflux/certs:latest
