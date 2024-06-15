@@ -62,31 +62,18 @@ cargo install ouch du-dust exa bat fd-find ripgrep tealdeer cargo-generate jwt-c
 This is done after installing go.
 
 ```bash
-go install github.com/segmentio/kafka-go@latest
-go install github.com/confluentinc/confluent-kafka-go/v2/kafka@latest
-go install golang.org/x/website/tour@latest
 go install golang.org/x/tools/cmd/godoc@latest
 go install github.com/fullstorydev/grpcui/cmd/grpcui@latest
 go install github.com/go-delve/delve/cmd/dlv@latest
 go install github.com/google/pprof@latest
 go install golang.org/x/tools/gopls@latest
-go install golang.org/x/tools/gopls@latest
 go install github.com/jesseduffield/lazygit@latest
 go install github.com/goreleaser/goreleaser@latest
-go install github.com/birdayz/kaf/cmd/kaf@latest
 go install github.com/nats-io/gnatsd@latest
-go install github.com/tetafro/godot/cmd/godot@latest
-go install github.com/denis-tingaikin/go-header/cmd/go-header@latest
 go install github.com/nats-io/natscli/nats@latest
-go install golang.org/x/tools/cmd/goimports@latest
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-go install -v github.com/go-critic/go-critic/cmd/gocritic@latest
-go install golang.org/dl/go1.10.7@latest
-go install github.com/alexkohler/unimport@latest
-go install github.com/takanorig/mqtt-bench@latest
-go install github.com/k3d-io/k3d/v5@latest
+go install github.com/go-critic/go-critic/cmd/gocritic@latest
 go install github.com/derailed/k9s@latest
-go install go.k6.io/xk6/cmd/xk6@latest
-go install github.com/nats-io/nats-top@latest
+go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 ```

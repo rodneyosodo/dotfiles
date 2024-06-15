@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -71,26 +71,30 @@ ZSH_THEME="jovial"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  ssh-agent
   git
   autojump
   urltools
   bgnotify
   zsh-autosuggestions
   zsh-syntax-highlighting
+  zsh-history-enquirer
   jovial
-  autopep8
+
   cp
   dotenv
   gh
   git-prompt
   history
   httpie
-  minikube
   zsh-wakatime
   virtualenv
   zsh-interactive-cd
   zsh-navigation-tools
 )
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+zstyle :omz:plugins:ssh-agent identities github
+zstyle :omz:plugins:ssh-agent lifetime 30d
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,15 +103,14 @@ source $ZSH/oh-my-zsh.sh
 eval $(thefuck --alias)
 
 export PATH=$PATH:/usr/local/go/bin
+export GOBIN=~/go/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:/home/r0x6f736f646f/tools/istio-1.17.2/bin
 export PATH=$PATH:~/.cargo/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export GOROOT=/usr/lib/go
-source ~/.wakatime/bash-wakatime/bash-wakatime.sh
-
+source ~/.oh-my-zsh/custom/plugins/.wakatime/bash-wakatime/bash-wakatime.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -131,34 +134,16 @@ source ~/.wakatime/bash-wakatime/bash-wakatime.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls=exa
-alias cat=bat
-alias grep=rg
-alias balena="~/tools/balenaEtcher-1.18.4-x64.AppImage"
-alias upgrade="sudo apt-get update && sudo apt-get upgrade -y && sudo apt auto-remove"
-alias makeclients="make all && make docker_dev"
+
 alias makeall="make all -j 8 && make dockers_dev -j 8"
-alias gotidy="go mod tidy && go mod vendor"
-alias gotest="go test -mod=vendor -v --race -covermode=atomic -coverprofile=cover.out ./..."
+alias gotest="go test -v --race -covermode=atomic -coverprofile=cover.out ./..."
 alias gocover="go tool cover -html cover.out -o cover.html"
 alias gobenchprof="go test -mod=vendor -v -bench=. -benchmem -cpuprofile=cpu.prof -memprofile=mem.prof -coverprofile=prof.out ./..."
-alias goprofcpu="go tool pprof -http=:8080 cpu.prof"
-alias mygolangci-lint="golangci-lint run --no-config --disable-all --enable gosimple --enable govet --enable unused --enable misspell --enable revive --enable godot --enable gocritic --enable unconvert --enable whitespace --enable errorlint --enable gomnd --enable nlreturn --timeout 3m"
-alias dockerportainer="docker run -d -p 84:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest"
-alias dockerswagger="docker run -d -p 83:8080 --name swagger --restart=always swaggerapi/swagger-editor"
 alias gpr="git pull --rebase"
-alias gprum="git pull --rebase upstream master"
+alias gprum="git pull --rebase upstream main"
 alias gpf="git push --force-with-lease"
-# alias docker-compose="docker compose"
 
-# >>>> Vagrant command completion (start)
-fpath=(/opt/vagrant/embedded/gems/2.3.4/gems/vagrant-2.3.4/contrib/zsh $fpath)
-compinit
-# <<<<  Vagrant command completion (end)
 
-# add Pulumi to the PATH
-export PATH=$PATH:$HOME/.pulumi/bin
-
-autoload -Uz compinit
-zstyle ':completion:*' menu select
-fpath+=~/.zfunc
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

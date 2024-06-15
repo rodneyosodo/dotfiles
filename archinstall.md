@@ -8,6 +8,7 @@ device list
 station wlan0 scan
 station wlan0 get-networks
 station wlan0 connect <SSID>
+
 ping rodneyosodo.com
 ```
 
@@ -47,19 +48,6 @@ For now, you can use the following config files:
 }
 ```
 
-## Update the system
-
-```bash
-sudo pacman -Syu
-```
-
-## Install AMD Microcode
-
-```bash
-yay -S amd-ucode
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
 ## Edit Pacman Conf
 
 ```bash
@@ -76,6 +64,12 @@ sudo vim /etc/environment
 
 The changes should reflect [environment](arch/environment)
 
+## Update the system
+
+```bash
+sudo pacman -Syu
+```
+
 ## Install yay
 
 ```bash
@@ -86,26 +80,17 @@ cd yay/
 makepkg -si
 ```
 
-## Install Brave
-
-```bash
-yay -S brave-bin
-```
-
-Join the existing sync chain. Then log in to your Google account.
-
-## Install VSCode
-
-```bash
-yay -S visual-studio-code-bin
-```
-
-Setup system settings sync to install extensions and settings.
-
 ## Install Utilities
 
 ```bash
-yay -S git vim neofetch p7zip unrar tar flac curl wget make jdk-openjdk thefuck wakatime  python-pip
+yay -S git vim neovim neofetch p7zip unrar tar flac curl wget make jdk-openjdk thefuck wakatime python-pip bpytop alacritty httpie putty
+```
+
+## Install AMD Microcode
+
+```bash
+yay -S amd-ucode
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ## Bluetooth
@@ -120,7 +105,7 @@ sudo systemctl start bluetooth
 ## Audio
 
 ```bash
-yay -S pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack pavucontrol alsa alsa-mixer
+yay -S pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack pavucontrol
 ```
 
 ## Setup Git
@@ -130,6 +115,7 @@ ssh-keygen -t ed25519 -C "socials@rodneyosodo.com" -f ~/.ssh/github
 ssh -T git@github.com
 git config --global user.email "socials@rodneyosodo.com"
 git config --global user.name "Rodney Osodo"
+git config --global user.signingkey ~/.ssh/github
 ```
 
 Copy the contents of `~/.ssh/github.pub` to github both for authentication and signing keys.
@@ -139,13 +125,6 @@ Copy the contents of `~/.ssh/github.pub` to github both for authentication and s
 ```bash
 yay -S zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-## Install dotfiles
-
-```bash
-git clone git@github.com:rodneyosodo/dotfiles.git
-cd dotfiles/
 ```
 
 ## Edit Zshrc
@@ -165,73 +144,43 @@ curl -sSL https://github.com/zthxxx/jovial/raw/master/installer.sh | sudo -E bas
 ### Install autojump
 
 ```bash
-cd Downloads/
-git clone https://github.com/wting/autojump.git
-cd autojump/
-./install.py
+cd Downloads/ && git clone https://github.com/wting/autojump.git && cd autojump/ && ./install.py && cd ~
 ```
 
 ### Install ZSH Wakatime
 
 ```bash
-cd ~/.oh-my-zsh/custom/plugins && git clone https://github.com/wbingli/zsh-wakatime.git
-git clone git@github.com:irondoge/bash-wakatime.git .wakatime/bash-wakatime
-```
-
-## Install bpytop
-
-```bash
-pip install bpytop --break-system-packages
+cd ~/.oh-my-zsh/custom/plugins && git clone https://github.com/wbingli/zsh-wakatime.git && git clone git@github.com:irondoge/bash-wakatime.git && cd ~
 ```
 
 ## Install major software
 
 ```bash
-yay -S slack-desktop teams discord easyeda kicad obsidian libreoffice obs-studio vlc postman inkscape gimp virtualbox virt-manager flameshot diodon
-sudo systemctl enable docker
-sudo systemctl start docker
-sudo usermod -aG docker $USER // Logout and login again
-sudo systemctl restart libvirtd.service
+yay -S brave-bin slack-desktop discord easyeda kicad obsidian obs-studio vlc postman inkscape gimp dnsmasq virt-manager qemu-full flameshot diodon
 ```
+
+For brave, join the existing sync chain. Then log in to your Google account.
 
 Change keybindings for flameshot to `Print` and `Ctrl + Print`
 
 ## Install
 
 ```bash
-yay -S go mosquitto-clients minikube kubectl rustup act-bin github-cli httpie putty neovim docker docker-compose tilix rancher-k3d-bin bandwhich vagrant hyperfine helm nomad
+yay -S go nodejs zig bun-bin mosquitto-clients kubectl rustup act github-cli docker docker-compose docker-buildx vagrant hyperfine helm nomad dbeaver visual-studio-code-bin
+
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+sudo systemctl restart libvirtd.service
+
 gh auth login
+
 rustup toolchain install nightly
 rustup default nightly
-rustup component add cargo
-rustup component add rust-src
-rustup component add rust-analyzer
-rustup component add rustfmt
-rustup component add clippy
-rustup component add rust-docs
-rustup component add rust-std
-rustup component add rustc
-rustup component add rustc-dev
 rustup component add llvm-tools-preview
-minikube config set cpus 4
-minikube config set memory 8192
-minikube addons enable dashboard
-minikube addons enable headlamp
-minikube addons enable helm-tiller
-minikube addons enable ingress
-minikube addons enable ingress-dns
-minikube addons enable istio
-minikube addons enable kong
-minikube addons enable metallb
-minikube addons enable logviewer
-minikube addons enable metrics-server
-minikube addons enable registry
-minikube cache add kibana/kibana:5.6.2-custom
-vagrant plugin install vagrant-qemu
-vagrant plugin install vagrant-share
+
 vagrant box add hashicorp/bionic64
-vagrant autocomplete install
-vagrant box add bento/ubuntu-22.04
+vagrant box add bento/ubuntu-24.04
 helm repo add stable https://charts.helm.sh/stable
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add ory https://k8s.ory.sh/helm/charts
