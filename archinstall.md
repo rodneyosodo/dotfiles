@@ -74,10 +74,10 @@ sudo pacman -Syu
 
 ```bash
 sudo pacman -Sy --needed git base-devel
-cd Downloads/
-git clone https://aur.archlinux.org/yay.git
-cd yay/
-makepkg -si
+```
+
+```bash
+cd ~/Downloads/ && git clone https://aur.archlinux.org/yay.git --depth=1 && cd yay/ && makepkg -si && cd ~
 ```
 
 ## Install Utilities
@@ -90,6 +90,9 @@ yay -S git vim neovim neofetch p7zip unrar tar flac curl wget make jdk-openjdk t
 
 ```bash
 yay -S amd-ucode
+```
+
+```bash
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -97,9 +100,18 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ```bash
 yay -S bluez blueman bluez-utils
+```
+
+```bash
 sudo modprobe btusb
-sudo systemctl enable bluetooth
+```
+
+```bash
 sudo systemctl start bluetooth
+```
+
+```bash
+sudo systemctl enable bluetooth
 ```
 
 ## Audio
@@ -108,13 +120,59 @@ sudo systemctl start bluetooth
 yay -S pulseaudio pulseaudio-alsa pulseaudio-bluetooth pulseaudio-jack pavucontrol
 ```
 
+## Preload
+
+```bash
+yay -S preload
+```
+
+```bash
+sudo systemctl start preload.service
+```
+
+```bash
+sudo systemctl enable preload.service
+```
+
+## Pacman Cache
+
+```bash
+yay -S pacman-contrib
+```
+
+```bash
+sudo systemctl start paccache.timer
+```
+
+```bash
+sudo systemctl enable paccache.timer
+```
+
+## Install major software
+
+```bash
+yay -S brave-bin slack-desktop discord easyeda kicad obsidian obs-studio vlc postman-bin inkscape gimp dnsmasq virt-manager qemu-full flameshot
+```
+
+For brave, join the existing sync chain. Then log in to your Google account.
+
+Change keybindings for flameshot to `Print` and `Ctrl + Print`
+
 ## Setup Git
 
 ```bash
 ssh-keygen -t ed25519 -C "socials@rodneyosodo.com" -f ~/.ssh/github
-ssh -T git@github.com
+```
+
+```bash
 git config --global user.email "socials@rodneyosodo.com"
+```
+
+```bash
 git config --global user.name "Rodney Osodo"
+```
+
+```bash
 git config --global user.signingkey ~/.ssh/github
 ```
 
@@ -144,33 +202,34 @@ curl -sSL https://github.com/zthxxx/jovial/raw/master/installer.sh | sudo -E bas
 ### Install autojump
 
 ```bash
-cd Downloads/ && git clone https://github.com/wting/autojump.git && cd autojump/ && ./install.py && cd ~
+cd ~/Downloads/ && git clone https://github.com/wting/autojump.git --depth=1 && cd autojump/ && ./install.py && cd ~
 ```
 
 ### Install ZSH Wakatime
 
 ```bash
-cd ~/.oh-my-zsh/custom/plugins && git clone https://github.com/wbingli/zsh-wakatime.git && git clone git@github.com:irondoge/bash-wakatime.git && cd ~
+cd ~/.oh-my-zsh/custom/plugins && git clone https://github.com/wbingli/zsh-wakatime.git --depth=1 && git clone https://github.com/irondoge/bash-wakatime.git --depth=1 && cd ~
 ```
-
-## Install major software
-
-```bash
-yay -S brave-bin slack-desktop discord easyeda kicad obsidian obs-studio vlc postman inkscape gimp dnsmasq virt-manager qemu-full flameshot diodon
-```
-
-For brave, join the existing sync chain. Then log in to your Google account.
-
-Change keybindings for flameshot to `Print` and `Ctrl + Print`
 
 ## Install
 
 ```bash
 yay -S go nodejs zig bun-bin mosquitto-clients kubectl rustup act github-cli docker docker-compose docker-buildx vagrant hyperfine helm nomad dbeaver visual-studio-code-bin
+```
 
-sudo systemctl enable docker
+```bash
 sudo systemctl start docker
+```
+
+```bash
+sudo systemctl enable docker
+```
+
+```bash
 sudo usermod -aG docker $USER
+```
+
+```bash
 sudo systemctl restart libvirtd.service
 
 gh auth login
@@ -196,41 +255,54 @@ yay -S gnome-tweaks gnome-browser-connector
 
 - Extension Manager - <https://extensions.gnome.org/>
 - Blur My Shell - <https://extensions.gnome.org/extension/3193/blur-my-shell/>
+- Clipboard Indicator - <https://extensions.gnome.org/extension/779/clipboard-indicator/>
+- Compiz windows effect - <https://extensions.gnome.org/extension/3210/compiz-windows-effect/>
 - User Themes - <https://extensions.gnome.org/extension/19/user-themes/>
 - Dash to Dock - <https://extensions.gnome.org/extension/307/dash-to-dock/>
 - Window List - <https://extensions.gnome.org/extension/602/window-list/>
 - Workspace Indicator - <https://extensions.gnome.org/extension/21/workspace-indicator/>
 - Tray Icons: Reloaded - <https://extensions.gnome.org/extension/2890/tray-icons-reloaded/>
 - Vitals - <https://extensions.gnome.org/extension/1460/vitals/>
+- Just Perfection - <https://extensions.gnome.org/extension/3843/just-perfection/>
+- Logo Menu - <https://extensions.gnome.org/extension/4451/logo-menu/>
+- Quick Setting Tweaker - <https://extensions.gnome.org/extension/5446/quick-settings-tweaker/>
+- Tiling Assistant - <https://extensions.gnome.org/extension/3733/tiling-assistant/>
+- User Avatar In Quick Settings - <https://extensions.gnome.org/extension/5506/user-avatar-in-quick-settings/>
 
 ### GTK
 
 ```bash
-cd Downloads/
-git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-cd WhiteSur-gtk-theme/
-./install.sh
+yay -S gtk-engine-murrine sassc ttf-hack-nerd
+```
+
+Applying themes to Flatpak applications
+
+```bash
+sudo flatpak override --filesystem=$HOME/.themes
+sudo flatpak override --filesystem=$HOME/.icons
+flatpak override --user --filesystem=xdg-config/gtk-4.0
+sudo flatpak override --filesystem=xdg-config/gtk-4.0
+```
+
+```bash
+cd ~/Downloads/ && git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git --depth=1 && cd WhiteSur-gtk-theme/ && ./install.sh && cd ~
+```
+
+```bash
+cd ~/Downloads/ && git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme.git --depth=1 && cd Gruvbox-GTK-Theme/ && ./install.sh -l && cd ~
 ```
 
 ### Cursor
 
 ```bash
-cd Downloads/
-git clone https://github.com/vinceliuice/McMojave-cursors.git
-cd McMojave-cursors/
-./install.sh
+cd ~/Downloads/ && git clone https://github.com/vinceliuice/McMojave-cursors.git --depth=1 && cd McMojave-cursors/ && ./install.sh && cd ~
 ```
 
 ### Icons
 
 ```bash
-git clone git@github.com:USBA/Cupertino-Ventura-iCons.git ~/.icons/Cupertino-Ventura-iCons
+git clone https://github.com/USBA/Cupertino-Ventura-iCons.git --depth=1 ~/.icons/Cupertino-Ventura-iCons
 ```
-
-### Notable mentions
-
-1. <https://github.com/Fausto-Korpsvart/Material-GTK-Themes>
-2. <https://github.com/Fausto-Korpsvart/Catppuccin-GTK-Theme>
 
 ## Install AMD Drivers
 

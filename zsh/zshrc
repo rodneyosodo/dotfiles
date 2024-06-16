@@ -110,7 +110,7 @@ export PATH=$PATH:~/.cargo/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export GOROOT=/usr/lib/go
-source ~/.oh-my-zsh/custom/plugins/.wakatime/bash-wakatime/bash-wakatime.sh
+source ~/.oh-my-zsh/custom/plugins/bash-wakatime/bash-wakatime.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
