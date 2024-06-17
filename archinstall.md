@@ -309,3 +309,9 @@ git clone https://github.com/USBA/Cupertino-Ventura-iCons.git --depth=1 ~/.icons
 ```bash
 yay -S mesa xf86-video-amdgpu vulkan-radeon vulkan-icd-loader libva-mesa-driver mesa-vdpau amdgpu_top-bin
 ```
+
+## Remove unnecessary packages
+
+```bash
+yay -Rns gnome-contacts gnome-maps simple-scan gnome-tour gnome-connections
+```
