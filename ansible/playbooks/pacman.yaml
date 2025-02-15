@@ -1,0 +1,52 @@
+- name: Setup Pacman
+  hosts: 127.0.0.1
+  become: yes
+  become_user: root
+  tasks:
+    - name: Enable Colour in pacman.conf
+      ansible.builtin.replace:
+        path: /etc/pacman.conf
+        regexp: "^#Color"
+        replace: "Color"
+
+    - name: Enable Parallel Downloads in pacman.conf
+      ansible.builtin.replace:
+        path: /etc/pacman.conf
+        regexp: '^(#\s*)?ParallelDownloads\s*=.*'
+        replace: "ParallelDownloads = 5"
+
+    - name: Run the equivalent of "pacman -Sy" as a separate step
+      community.general.pacman:
+        update_cache: true
+
+    - name: Run the equivalent of "pacman -Su" as a separate step
+      community.general.pacman:
+        upgrade: true
+
+    - name: Install Preload
+      kewlfft.aur.aur:
+        name:
+          - preload
+        use: yay
+        state: latest
+      become: no
+
+    - name: Start Preload
+      ansible.builtin.systemd_service:
+        name: preload
+        state: started
+        enabled: true
+
+    - name: Install pacman-contrib
+      kewlfft.aur.aur:
+        name:
+          - pacman-contrib
+        use: yay
+        state: latest
+      become: no
+
+    - name: Start paccache.timer
+      ansible.builtin.systemd_service:
+        name: paccache.timer
+        state: started
+        enabled: true

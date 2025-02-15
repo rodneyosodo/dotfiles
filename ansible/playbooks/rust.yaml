@@ -1,0 +1,21 @@
+- name: Rust Setup After Install
+  hosts: 127.0.0.1
+  tasks:
+    - name: Install Rustup if not already installed
+      kewlfft.aur.aur:
+        name:
+          - rustup
+        use: yay
+        state: present
+
+    - name: Install Nightly Toolchain
+      ansible.builtin.shell: |
+        rustup update
+        rustup target add wasm32-wasip1 wasm32-wasip2 wasm32-wasi wasm32-unknown-unknown
+        rustup toolchain install nightly nightly-2018-12-27
+        rustup component add clippy cargo rustfmt rust-std
+
+    - name: Install Cargo Tools
+      ansible.builtin.shell:
+        cmd: cargo install du-dust fd-find ripgrep cargo-generate jwt-cli wasm-pack git-cliff cargo-dist
+        executable: /bin/bash
