@@ -1,0 +1,58 @@
+- name: Ping all hosts
+  hosts: 127.0.0.1
+  vars:
+    package_file: "desktop.txt"
+  tasks:
+    - name: Read package list from file
+      slurp:
+        src: "{{ package_file }}"
+      register: package_file_content
+      delegate_to: localhost
+
+    - name: Set package list variable
+      set_fact:
+        package_list: "{{ (package_file_content['content'] | b64decode).split('\n') | select('regex', '^[a-zA-Z0-9_-]+$') | list }}"
+
+    - name: Run the equivalent of "pacman -Sy" as a separate step
+      community.general.pacman:
+        update_cache: true
+      become: yes
+      remote_user: root
+
+    - name: Run the equivalent of "pacman -Su" as a separate step
+      community.general.pacman:
+        upgrade: true
+      become: yes
+      remote_user: root
+
+    - name: Install packages using yay
+      kewlfft.aur.aur:
+        name: "{{ package_list }}"
+        use: yay
+        state: latest
+
+    - name: Remove unnecessary packages
+      community.general.pacman:
+        name:
+          - gnome-connections
+          - gnome-contacts
+          - simple-scan
+          - gnome-maps
+          - gnome-tour
+        state: absent
+      become: yes
+      become_user: root
+
+    - name: Install Syncthing
+      kewlfft.aur.aur:
+        name:
+          - syncthing
+        use: yay
+        state: present
+
+    - name: Start Syncthing Service
+      ansible.builtin.systemd_service:
+        name: syncthing@rodneyosodo
+        state: started
+        enabled: true
+      register: syncthing

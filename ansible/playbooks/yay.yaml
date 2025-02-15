@@ -1,0 +1,34 @@
+- name: Install yay
+  hosts: 127.0.0.1
+  vars:
+    build_directory: "/tmp/yay-build"
+  tasks:
+    - name: Check if yay is installed
+      command: yay --version
+      register: yay_version
+      ignore_errors: true
+
+    - name: Install prerequisites
+      community.general.pacman:
+        name:
+          - git
+          - base-devel
+        state: present
+
+    - name: Clone yay repository
+      git:
+        repo: https://aur.archlinux.org/yay.git
+        dest: "{{ build_directory }}"
+      when: yay_version.rc != 0
+
+    - name: Build and install yay
+      shell: cd "{{ build_directory }}" && makepkg -si --noconfirm
+      when: yay_version.rc != 0
+      args:
+        creates: /usr/bin/yay
+
+    - name: Clean up build directory
+      file:
+        path: "{{ build_directory }}"
+        state: absent
+      when: ansible_check_mode == false

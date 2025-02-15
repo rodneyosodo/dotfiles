@@ -1,0 +1,24 @@
+- name: Setup Environment
+  hosts: 127.0.0.1
+  become: yes
+  become_user: root  
+  tasks:
+    - name: Add Language to Environment
+      ansible.builtin.lineinfile:
+        path: /etc/environment
+        line: "LANG=en_GB.utf-8"
+        state: present
+        create: true
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: Add Locale to Environment
+      ansible.builtin.lineinfile:
+        path: /etc/environment
+        line: "LC_ALL=en_GB.utf-8"
+        state: present
+        create: true
+        mode: 0644
+        owner: root
+        group: root

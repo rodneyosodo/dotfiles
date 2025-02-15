@@ -1,0 +1,21 @@
+- name: Install AMD GPU Utilities
+  hosts: 127.0.0.1
+  tasks:
+    - name: Install AMD GPU Utilities
+      kewlfft.aur.aur:
+        name:
+          - amd-ucode
+          - amdgpu_top-bin
+          - mesa
+          - xf86-video-amdgpu
+          - vulkan-radeon
+          - vulkan-icd-loader
+          - libva-mesa-driver
+          - mesa-vdpau
+        use: yay
+        state: present
+
+    - name: Update GRUB
+      become: yes
+      become_user: root
+      shell: grub-mkconfig -o /boot/grub/grub.cfg

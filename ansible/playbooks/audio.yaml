@@ -1,0 +1,33 @@
+- name: Setup Audio
+  hosts: 127.0.0.1
+  tasks:
+    - name: Install Bluetooth Utilities
+      kewlfft.aur.aur:
+        name:
+          - bluez
+          - blueman
+          - bluez-utils
+        use: yay
+        state: present
+
+    - name: Add Bluetooth Module to Linux Kernel
+      community.general.modprobe:
+        name: btusb
+        state: present
+
+    - name: Start Bluetooth Service
+      ansible.builtin.systemd_service:
+        name: bluetooth
+        state: started
+        enabled: true
+
+    - name: Install Audio Utilities
+      kewlfft.aur.aur:
+        name:
+          - pulseaudio
+          - pulseaudio-alsa
+          - pulseaudio-bluetooth
+          - pulseaudio-jack
+          - pavucontrol
+        use: yay
+        state: present
