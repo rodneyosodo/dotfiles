@@ -73,7 +73,6 @@ ZSH_THEME="jovial"
 plugins=(
   ssh-agent
   git
-  autojump
   urltools
   bgnotify
   zsh-autosuggestions
@@ -91,12 +90,14 @@ plugins=(
   virtualenv
   zsh-interactive-cd
   zsh-navigation-tools
+  aliases
 )
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
 zstyle :omz:plugins:ssh-agent identities github
 zstyle :omz:plugins:ssh-agent lifetime 30d
 
 source $ZSH/oh-my-zsh.sh
+# source /opt/esp-idf/export.sh
 
 # User configuration
 
@@ -107,6 +108,7 @@ export GOBIN=~/go/bin
 export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:/opt/google-cloud-cli/bin/
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export GOROOT=/usr/lib/go
@@ -138,12 +140,53 @@ source ~/.oh-my-zsh/custom/plugins/bash-wakatime/bash-wakatime.sh
 alias makeall="make all -j 8 && make dockers_dev -j 8"
 alias gotest="go test -v --race -covermode=atomic -coverprofile=cover.out ./..."
 alias gocover="go tool cover -html cover.out -o cover.html"
-alias gobenchprof="go test -mod=vendor -v -bench=. -benchmem -cpuprofile=cpu.prof -memprofile=mem.prof -coverprofile=prof.out ./..."
+alias gobenchprof="go test -v -bench=. -benchmem -cpuprofile=cpu.prof -memprofile=mem.prof -coverprofile=prof.out ./..."
 alias gpr="git pull --rebase"
 alias gprum="git pull --rebase upstream main"
 alias gpf="git push --force-with-lease"
+alias ze="zellij -l welcome"
+alias act="/usr/bin/act"
 
+# Function to rebase last n commits and signoff
+function rebase_signoff() {
+  if [ $# -lt 1 ]; then
+    echo "Please provide the number of commits to rebase\nUsage: grs <number-of-commits>"
+    return
+  fi
+
+  git rebase -i HEAD~$1 --exec "git commit --amend --no-edit --signoff -S"
+}
+
+# Function to change directory to ~/code/$1
+function cd_code() {
+  if [ $# -lt 1 ]; then
+    echo "Please provide the name of the directory to change to\nUsage: cd_code <directory-name>"
+    return
+  fi
+  cd ~/code/$1
+}
+
+function genpasswd() {
+  local length=$1
+  [ -z "$length" ] && length=16
+  tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${length} | xargs
+}
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+
+. "$HOME/.wasmedge/env"
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+autoload -U compinit; compinit
+
+. "$HOME/.cargo/env"
+
