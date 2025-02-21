@@ -9,7 +9,6 @@ prep:
 
 .PHONY: setup-desktop
 setup-desktop: prep
-	ansible-playbook playbooks/environment.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/yay.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/pacman.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/packages/desktop.yaml --connection=local --ask-become-pass
