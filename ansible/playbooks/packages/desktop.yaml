@@ -56,3 +56,24 @@
         state: started
         enabled: true
       register: syncthing
+
+    - name: Start tailscaled
+      ansible.builtin.systemd_service:
+        name: tailscaled
+        state: started
+        enabled: true
+        daemon_reload: true
+
+    - name: Install Reflector
+      kewlfft.aur.aur:
+        name:
+          - reflector
+        use: yay
+        state: present
+
+    - name: Update mirrorlist
+      ansible.builtin.shell: |
+        cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+        reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+      become: yes
+      become_user: root

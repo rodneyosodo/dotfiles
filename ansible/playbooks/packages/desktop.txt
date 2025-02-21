@@ -155,3 +155,5 @@ goreleaser
 golangci-lint
 waybar
 ttf-font-awesome
+reflector
+
