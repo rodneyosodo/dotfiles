@@ -1,28 +1,74 @@
-# Linux Journal
+# Installation
 
-## Disto of choice
+I use `archinstall` to install Arch Linux. After booting into Arch connect to the internet using `iwctl` and then run the following command:
 
-I have previously used Ubuntu, but I have recently switched to Arch Linux. I have found that Arch Linux is much more customizable and lightweight than Ubuntu. I also like the AUR, which is a repository of user-created packages. I have found that the AUR has almost every package I need, and it is very easy to install packages from the AUR.
+```bash
+iwctl
+device list
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect <SSID>
 
-I have shifted to Arch Linux as my primary distro for my PC, this is because:
+ping rodneyosodo.com
+```
 
-- I like the AUR
-- I like the Arch Wiki
-- Sometimes staying on the bleeding edge is fun
+I use the following config files:
 
-I will continue and forever use Debian for my servers and workstations, this is because:
+```json
+{
+  "additional-repositories": ["multilib"],
+  "archinstall-language": "English",
+  "audio": "", // Left and install pulseaudio and pavucontrol after.
+  "bootloader": "Grub",
+  "filesystem": "btrfs", // Use best effort partition layout. Subvolumes yes, compression no.
+  "gfx_driver": "VMware / VirtualBox (open-source)",
+  "harddrives": [
+    "/dev/nvme0n1" //
+  ],
+  "hostname": "rodneypc", // Change this to your hostname
+  "kernels": ["linux"],
+  "keyboard-language": "us",
+  "mirror-region": "", // Left blank to use the fastest mirror.
+  "nic": {
+    "NetworkManager": true,
+    "nic": "Use NetworkManager (necessary to configure internet graphically in GNOME and KDE)"
+  },
+  "ntp": true,
+  "profile": "gnome", // Grapphics driver AMD / ATI (open-source)
+  "sys-encoding": "utf-8",
+  "sys-language": "en_GB",
+  "swap": true,
+  "timezone": "Africa/Nairobi"
+}
+```
 
-- I like the stability
-- I like the community
+## Install Ansible
 
-This is somehow a goodbye to Ubuntu, I feel like I have outgrown it. I started using Ubuntu 2017 and I have been using it since then. I have learned a lot from Ubuntu, and I will forever be grateful for that. After 7 years the journey has come to an end. After all, Ubuntu is the reason why I am here today.
+```bash
+git clone https://github.com/rodneyosodo/dotfiles.git
+cd dotfiles
+bash install
+```
 
-## Desktop Environment
+## Run ansible playbooks
 
-GNOME is my desktop environment of choice. I like the simplicity of GNOME, and I like the way it looks. GNOME extensions are also very useful, and I use a lot of them. Though it is a bit heavy, I don't mind that.
+```bash
+cd ansible
+make setup-desktop
+```
 
-## Installation
+## After Installation
 
-### Arch Linux
+- Brave - Join the existing sync chain and let it sync your data.
+- Login into your Google account.
+- Login into vaultwarden
+- Sync folders using syncthing
 
-Follow the instructions in the [Arch](archinstall.md) section.
+Change keybindings for flameshot to `Print` and `Ctrl + Print`
+
+## Setup Dotfiles
+
+```bash
+cd config
+make install-dotfiles
+```
