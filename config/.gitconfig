@@ -22,13 +22,6 @@
 [push]
   autoSetupRemote = true
 
-[url "ssh://git@github.com/"]
-  insteadOf = https://github.com/
-[url "ssh://git@gitlab.com/"]
-  insteadOf = https://gitlab.com/
-[url "ssh://git@bitbucket.org/"]
-  insteadOf = https://bitbucket.org/
-
 [init]
   defaultBranch = main
 
@@ -50,3 +43,7 @@
   hunk-header-file-style = red
   hunk-header-line-number-style = "#067a00"
   hunk-header-style = file line-number syntax
+
+# Detect whitespace errors when applying a patch.
+[apply]
+	whitespace = fix

@@ -17,5 +17,5 @@
 
     - name: Install Cargo Tools
       ansible.builtin.shell:
-        cmd: cargo install du-dust fd-find ripgrep cargo-generate jwt-cli wasm-pack git-cliff cargo-dist
+        cmd: cargo install du-dust fd-find ripgrep cargo-generate jwt-cli wasm-pack git-cliff
         executable: /bin/bash

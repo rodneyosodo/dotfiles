@@ -15,6 +15,7 @@ install-dotfiles:
 .PHONY: help
 help:
 	@echo "This Makefile is used to install dotfiles"
+	@echo ""
 	@echo "Usage:"
 	@echo "  make install-dotfiles    - install dotfiles"
 	@echo "  make install-stow        - install stow"

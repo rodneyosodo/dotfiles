@@ -31,7 +31,6 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
-zinit snippet OMZP::zsh-navigation-tools
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -47,6 +46,11 @@ zinit snippet OMZP::command-not-found
 zinit snippet OMZP::zsh-interactive-cd
 zinit snippet OMZP::zsh-navigation-tools
 zinit snippet OMZP::aliases
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+zinit load 'zsh-users/zsh-history-substring-search'
+zinit ice wait atload'_history_substring_search_config'
+
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -64,9 +68,12 @@ bindkey '^[w' kill-region
 bindkey  "^[[H"   beginning-of-line
 bindkey  "^[[F"   end-of-line
 bindkey  "^[[3~"  delete-char
+# Interactive history search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # History
-HISTSIZE=5000
+HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -90,7 +97,6 @@ zstyle :omz:plugins:ssh-agent lifetime 30d
 
 
 # Aliases
-alias ls='ls --color'
 alias c='clear'
 alias cat='bat'
 alias ls='exa'
@@ -110,9 +116,18 @@ eval $(thefuck --alias)
 eval "$(fzf --zsh)"
 eval `ssh-agent -s`
 
-if [ -f "~/.ssh/github" ]; then
-  ssh-add ~/.ssh/github
+if [ -f "$HOME/.ssh/github" ]; then
+  eval `keychain --quiet --agents ssh --eval $HOME/.ssh/github`
+else
+  echo "File "~/.ssh/github" does not exist."
 fi
+
+# if mkdir "${HOME}/.npm-packages" is not found, then create it
+if [ ! -d "${HOME}/.npm-packages" ]; then
+  mkdir "${HOME}/.npm-packages"
+fi
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PATH:$NPM_PACKAGES/bin"
 
 alias makeall="make all -j 8 && make dockers_dev -j 8"
 alias gotest="go test -v --race -covermode=atomic -coverprofile=cover.out ./..."
