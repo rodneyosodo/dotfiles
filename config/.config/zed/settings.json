@@ -1,0 +1,55 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
+  "git_status": true,
+  "file_icons": true,
+  "project_panel": {
+    "dock": "left",
+    "git_status": true,
+    "button": true
+  },
+  "languages": {
+    "Markdown": {
+      "soft_wrap": "editor_width"
+    }
+  },
+  "terminal": {
+    "font_size": 14,
+    "copy_on_select": true
+  },
+  "features": {
+    "inline_completion_provider": "zed"
+  },
+  "scroll_beyond_last_line": "one_page",
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
+    },
+    "version": "2",
+    "provider": {
+      "name": "openai",
+      "default_model": "gpt-3.5-turbo",
+      "available_models": []
+    }
+  },
+  "theme": "Gruvbox Dark",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "format_on_save": "on",
+  "ui_font_size": 14,
+  "buffer_font_size": 14
+}
