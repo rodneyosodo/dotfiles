@@ -1,0 +1,52 @@
+[user]
+	email = socials@rodneyosodo.com
+	name = Rodney Osodo
+	signingkey = ~/.ssh/github.pub
+
+[core]
+  editor = nvim
+  pager = delta
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	format = ssh
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+
+[push]
+  autoSetupRemote = true
+
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+[url "ssh://git@gitlab.com/"]
+  insteadOf = https://gitlab.com/
+[url "ssh://git@bitbucket.org/"]
+  insteadOf = https://bitbucket.org/
+
+[init]
+  defaultBranch = main
+
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+
+[delta]
+  features = decorations
+
+[delta "interactive"]
+  keep-plus-minus-markers = false
+
+[delta "decorations"]
+  line-numbers = true
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
