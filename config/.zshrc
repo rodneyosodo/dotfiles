@@ -102,19 +102,22 @@ alias cat='bat'
 alias ls='exa'
 
 export PATH=$PATH:/usr/local/go/bin
-export GOBIN=~/go/bin
-export PATH=$PATH:~/go/bin
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:/opt/google-cloud-cli/bin/
 export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
 export GOROOT=/usr/lib/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOBIN
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
 # Shell integrations
 eval $(thefuck --alias)
 eval "$(fzf --zsh)"
 eval `ssh-agent -s`
+eval "$(pyenv init - zsh)"
 
 if [ -f "$HOME/.ssh/github" ]; then
   eval `keychain --quiet --agents ssh --eval $HOME/.ssh/github`
@@ -122,12 +125,13 @@ else
   echo "File "~/.ssh/github" does not exist."
 fi
 
-# if mkdir "${HOME}/.npm-packages" is not found, then create it
 if [ ! -d "${HOME}/.npm-packages" ]; then
   mkdir "${HOME}/.npm-packages"
 fi
 NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 alias makeall="make all -j 8 && make dockers_dev -j 8"
 alias gotest="go test -v --race -covermode=atomic -coverprofile=cover.out ./..."
@@ -157,5 +161,3 @@ function genpasswd() {
   [ -z "$length" ] && length=16
   tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${length} | xargs
 }
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
