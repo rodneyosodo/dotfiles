@@ -1,5 +1,10 @@
 # Installation
 
+```bash
+# writing an ISO image to a USB stick using the dd command
+sudo dd if=archlinux-x86_64.iso of=/dev/sdc bs=1M conv=sync status=progress
+```
+
 I use `archinstall` to install Arch Linux. After booting into Arch connect to the internet using `iwctl` and then run the following command:
 
 ```bash
