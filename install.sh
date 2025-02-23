@@ -10,4 +10,3 @@ else
     echo "Could not find apt or pacman"
     exit 1
 fi
-
