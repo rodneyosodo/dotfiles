@@ -29,7 +29,7 @@
     "copy_on_select": true
   },
   "features": {
-    "inline_completion_provider": "zed"
+    "edit_prediction_provider": "zed"
   },
   "scroll_beyond_last_line": "one_page",
   "assistant": {
