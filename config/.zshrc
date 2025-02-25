@@ -99,8 +99,11 @@ zstyle :omz:plugins:ssh-agent lifetime 30d
 # Aliases
 alias c='clear'
 alias cat='bat'
-alias ls='exa'
+alias ls='exa --icons=auto -F'
+alias ll='exa --icons=auto -F -bgh -l --total-size'
+alias fzf='fzf --preview="bat --color=always {}"'
 
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.cargo/bin
