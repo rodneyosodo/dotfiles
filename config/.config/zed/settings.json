@@ -7,6 +7,19 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "ssh_connections": [
+    {
+      "host": "bohr",
+      "username": "rodneyosodo",
+      "projects": [
+        {
+          "paths": [
+            "~/homelab"
+          ]
+        }
+      ]
+    }
+  ],
   "autosave": {
     "after_delay": {
       "milliseconds": 1000
