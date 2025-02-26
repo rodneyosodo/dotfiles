@@ -10,7 +10,7 @@ install-stow:
 .PHONY: install-dotfiles
 install-dotfiles:
 	@echo "Installing dotfiles"
-	@stow -t ~ .
+	@stow --adopt -t ~ .
 
 .PHONY: help
 help:

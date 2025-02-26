@@ -161,3 +161,4 @@ ripgrep
 fd
 keychain
 stow
+atuin

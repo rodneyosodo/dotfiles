@@ -49,8 +49,9 @@ zinit snippet OMZP::aliases
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit load 'zsh-users/zsh-history-substring-search'
-zinit ice wait atload'_history_substring_search_config'
+zinit ice wait atload '_history_substring_search_config'
 
+zinit load atuinsh/atuin
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -121,6 +122,7 @@ eval $(thefuck --alias)
 eval "$(fzf --zsh)"
 eval `ssh-agent -s`
 eval "$(pyenv init - zsh)"
+eval "$(atuin init zsh)"
 
 if [ -f "$HOME/.ssh/github" ]; then
   eval `keychain --quiet --agents ssh --eval $HOME/.ssh/github`
