@@ -1,0 +1,49 @@
+@import url("../../.cache/wal/colors-waybar.css");
+
+* {
+    all: unset;
+    background-image: none;
+    margin: unset;
+    padding: unset;
+    transition: 200ms cubic-bezier(0, 0, 1, 1);
+}
+
+button {
+    font-family: "CodeNewRoman Nerd Font Mono";
+    background-color: alpha(@color9, 1);
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 20px;
+}
+
+#lock {
+    background-image: image(url("../../.config/wlogout/lock.png"));
+}
+
+#logout {
+    background-image: image(url("../../.config/wlogout/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("../../.config/wlogout/sleep.png"));
+}
+
+#hibernate {
+    background-image: image(url("../../.config/wlogout/pause.png"));
+}
+
+#shutdown {
+    background-image: image(url("../../.config/wlogout/power.png"));
+}
+
+#reboot {
+    background-image: image(url("../../.config/wlogout/restart.png"));
+}
+
+button:focus {
+    background-color: alpha(@color5, 1);
+    color: #000000;
+    background-position: center;
+    margin: unset;
+}
