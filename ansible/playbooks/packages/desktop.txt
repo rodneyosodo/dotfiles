@@ -162,4 +162,10 @@ fd
 keychain
 stow
 atuin
-hyprpaper
+otf-font-awesome
+shellcheck
+power-profiles-daemon
+wlogout
+swaync
+swww
+python-pywal16
