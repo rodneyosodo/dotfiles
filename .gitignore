@@ -1,2 +1,5 @@
 # Zed Backup Config
 config/.config/zed/settings_backup.json
+
+# Neovim Lazy Lock
+config/.config/nvim/lazy-lock.json

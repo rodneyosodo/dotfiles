@@ -20,6 +20,7 @@
       ]
     }
   ],
+  "vim_mode": false,
   "autosave": {
     "after_delay": {
       "milliseconds": 1000
@@ -59,7 +60,7 @@
   },
   "theme": "Gruvbox Dark",
   "telemetry": {
-    "diagnostics": false,
+    "diagnostics": true,
     "metrics": false
   },
   "format_on_save": "on",
