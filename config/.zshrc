@@ -166,3 +166,10 @@ function genpasswd() {
   [ -z "$length" ] && length=16
   tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${length} | xargs
 }
+
+# Function to clean docker containers
+function clean_docker() {
+  if [[ $(docker ps -a -q) ]]; then
+    docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+  fi
+}
