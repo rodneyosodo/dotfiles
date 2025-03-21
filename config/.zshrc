@@ -39,19 +39,32 @@ zinit snippet OMZP::bgnotify
 zinit snippet OMZP::dotenv
 zinit snippet OMZP::git-prompt
 zinit snippet OMZP::virtualenv
-zinit snippet OMZP::aliases
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::zsh-interactive-cd
 zinit snippet OMZP::zsh-navigation-tools
-zinit snippet OMZP::aliases
 zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+zinit snippet OMZP::aliases
+
+# Directory to store the downloaded Python files
+OMZ_PLUGINS_DIR="${HOME}/.local/share/zinit/snippets/OMZP::aliases"
+mkdir -p "${OMZ_PLUGINS_DIR}"
+
+# Download cheatsheet.py and termcolor.py
+if [[ ! -f "${OMZ_PLUGINS_DIR}/cheatsheet.py" ]]; then
+  curl -o "${OMZ_PLUGINS_DIR}/cheatsheet.py" \
+    https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aliases/cheatsheet.py
+fi
+
+if [[ ! -f "${OMZ_PLUGINS_DIR}/termcolor.py" ]]; then
+  curl -o "${OMZ_PLUGINS_DIR}/termcolor.py" \
+    https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/aliases/termcolor.py
+fi
 
 zinit load 'zsh-users/zsh-history-substring-search'
 zinit ice wait atload '_history_substring_search_config'
-
-zinit load atuinsh/atuin
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -74,7 +87,7 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 # History
-HISTSIZE=10000
+HISTSIZE=100000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -104,6 +117,10 @@ alias ls='exa --icons=auto -F'
 alias ll='exa --icons=auto -F -bgh -l --total-size'
 alias fzf='fzf --preview="bat --color=always {}"'
 
+export EDITOR=nvim
+export TERMINAL=alacritty
+export BROWSER=brave
+
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/.local/bin
@@ -118,7 +135,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 
 # Shell integrations
-eval $(thefuck --alias)
+eval "$(thefuck --alias)"
 eval "$(fzf --zsh)"
 eval `ssh-agent -s`
 eval "$(pyenv init - zsh)"
@@ -173,3 +190,4 @@ function clean_docker() {
     docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
   fi
 }
+eval "$(uv generate-shell-completion zsh)"
