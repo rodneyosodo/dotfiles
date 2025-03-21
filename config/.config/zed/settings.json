@@ -7,15 +7,14 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "icon_theme": "Colored Zed Icons Theme Dark",
   "ssh_connections": [
     {
       "host": "bohr",
       "username": "rodneyosodo",
       "projects": [
         {
-          "paths": [
-            "~/homelab"
-          ]
+          "paths": ["~/homelab"]
         }
       ]
     }
@@ -27,6 +26,12 @@
     }
   },
   "git_status": true,
+  "git": {
+    "inline_blame": {
+      "enabled": true,
+      "show_commit_summary": true
+    }
+  },
   "file_icons": true,
   "project_panel": {
     "dock": "left",
@@ -63,7 +68,32 @@
     "diagnostics": true,
     "metrics": false
   },
+  "enable_language_server": true,
   "format_on_save": "on",
   "ui_font_size": 14,
-  "buffer_font_size": 14
+  "buffer_font_size": 14,
+  "load_direnv": "direct",
+  "auto_install_extensions": {
+    "html": true,
+    "toml": true,
+    "dockerfile": true,
+    "git-firefly": true,
+    "sql": true,
+    "terraform": true,
+    "make": true,
+    "zig": true,
+    "docker-compose": true,
+    "graphql": true,
+    "biome": true,
+    "ruff": true,
+    "markdown-oxide": true,
+    "basher": true,
+    "golangci-lint": true,
+    "erlang": true,
+    "colored-zed-icons-theme": true,
+    "libsql-context-server": true,
+    "csv": true,
+    "tailwind-theme": true,
+    "wakatime": true
+  }
 }
