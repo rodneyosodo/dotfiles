@@ -146,6 +146,8 @@ curl
 wget
 preload
 kicad
+kicad-library
+kicad-library-3d
 mosquitto-clients
 less
 syncthing
