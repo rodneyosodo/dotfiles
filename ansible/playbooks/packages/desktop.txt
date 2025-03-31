@@ -149,6 +149,7 @@ kicad
 kicad-library
 kicad-library-3d
 mosquitto-clients
+mosquitto
 less
 syncthing
 k9s
@@ -171,3 +172,5 @@ wlogout
 swaync
 swww
 python-pywal16
+wl-clipboard
+auto-cpufreq

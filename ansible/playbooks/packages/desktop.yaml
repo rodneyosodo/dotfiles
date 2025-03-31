@@ -77,3 +77,23 @@
         reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
       become: yes
       become_user: root
+
+    - name: Install auto-cpufreq
+      kewlfft.aur.aur:
+        name:
+          - auto-cpufreq
+        use: yay
+        state: present
+
+    - name: Start tailscaled
+      ansible.builtin.systemd_service:
+        name: auto-cpufreq
+        state: started
+        enabled: true
+        daemon_reload: true
+
+    - name: Install auto-cpufreq
+      ansible.builtin.shell: |
+        auto-cpufreq --install
+      become: yes
+      become_user: root
