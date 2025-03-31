@@ -46,7 +46,7 @@
 
 # Detect whitespace errors when applying a patch.
 [apply]
-	whitespace = fix
+    whitespace = fix
 
 # Cleanup branches
 [alias]
