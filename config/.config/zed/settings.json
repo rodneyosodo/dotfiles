@@ -7,7 +7,7 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "icon_theme": "Colored Zed Icons Theme Dark",
+  "icon_theme": "VSCode Great Icons Theme",
   "ssh_connections": [
     {
       "host": "bohr",
@@ -48,22 +48,17 @@
     "copy_on_select": true
   },
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "supermaven"
   },
   "scroll_beyond_last_line": "one_page",
-  "assistant": {
+  "agent": {
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-5-sonnet-latest"
     },
-    "version": "2",
-    "provider": {
-      "name": "openai",
-      "default_model": "gpt-3.5-turbo",
-      "available_models": []
-    }
+    "version": "2"
   },
-  "theme": "Gruvbox Dark",
+  "theme": "Gruvbox Dark Hard",
   "telemetry": {
     "diagnostics": true,
     "metrics": false
@@ -74,26 +69,30 @@
   "buffer_font_size": 14,
   "load_direnv": "direct",
   "auto_install_extensions": {
-    "html": true,
-    "toml": true,
-    "dockerfile": true,
-    "git-firefly": true,
-    "sql": true,
-    "terraform": true,
-    "make": true,
-    "zig": true,
-    "docker-compose": true,
-    "graphql": true,
-    "biome": true,
-    "ruff": true,
-    "markdown-oxide": true,
     "basher": true,
-    "golangci-lint": true,
-    "erlang": true,
+    "biome": true,
+    "charmed-icons": true,
     "colored-zed-icons-theme": true,
-    "libsql-context-server": true,
     "csv": true,
+    "docker-compose": true,
+    "dockerfile": true,
+    "erlang": true,
+    "git-firefly": true,
+    "golangci-lint": true,
+    "graphql": true,
+    "html": true,
+    "libsql-context-server": true,
+    "lua": true,
+    "make": true,
+    "markdown-oxide": true,
+    "mcp-server-github": true,
+    "ruff": true,
+    "sql": true,
     "tailwind-theme": true,
-    "wakatime": true
+    "terraform": true,
+    "toml": true,
+    "vscode-great-icons": true,
+    "wakatime": true,
+    "zig": true
   }
 }
