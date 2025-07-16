@@ -57,4 +57,7 @@
     cleanup-remote = "!git fetch -p && git branch -r --merged | grep -v '\\*\\|master\\|main\\|develop\\|dev\\|release' | sed 's/origin\\///' | xargs -n 1 -r git push origin --delete"
 
 [url "git@bitbucket.org:"]
-    insteadOf = https://bitbucket.org/
+	insteadOf = https://bitbucket.org/
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
