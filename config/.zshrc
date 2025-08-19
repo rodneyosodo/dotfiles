@@ -43,7 +43,6 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::zsh-interactive-cd
-zinit snippet OMZP::zsh-navigation-tools
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
 zinit snippet OMZP::aliases
@@ -118,7 +117,7 @@ alias ll='exa --icons=auto -F -bgh -l --total-size'
 alias fzf='fzf --preview="bat --color=always {}"'
 
 export EDITOR=nvim
-export TERMINAL=alacritty
+export TERMINAL=ghostty
 export BROWSER=brave
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
@@ -142,7 +141,9 @@ eval "$(pyenv init - zsh)"
 eval "$(atuin init zsh)"
 
 if [ -f "$HOME/.ssh/github" ]; then
-  eval `keychain --quiet --agents ssh --eval $HOME/.ssh/github`
+  if ! ssh-add -l | grep -q "rodneyosodo.com"; then
+    eval `keychain --quiet --eval $HOME/.ssh/github`
+  fi
 else
   echo "File "~/.ssh/github" does not exist."
 fi
