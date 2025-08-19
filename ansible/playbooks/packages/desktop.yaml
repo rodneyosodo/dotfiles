@@ -25,11 +25,22 @@
       become: yes
       remote_user: root
 
+    - name: Ensure build directory exists with correct permissions
+      file:
+        path: "{{ ansible_env.HOME }}/.cache/yay"
+        state: directory
+        owner: "{{ ansible_env.USER }}"
+        mode: "0755"
+      become: no
+
     - name: Install packages using yay
       kewlfft.aur.aur:
         name: "{{ package_list }}"
         use: yay
         state: latest
+      become: no
+      environment:
+        SUDO_ASKPASS: /bin/true
 
     - name: Remove unnecessary packages
       community.general.pacman:

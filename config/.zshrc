@@ -115,6 +115,7 @@ alias cat='bat'
 alias ls='exa --icons=auto -F'
 alias ll='exa --icons=auto -F -bgh -l --total-size'
 alias fzf='fzf --preview="bat --color=always {}"'
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 export EDITOR=nvim
 export TERMINAL=ghostty
@@ -132,6 +133,7 @@ export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOBIN
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+export ZEPHYR_BASE=~/zephyrproject/zephyr
 
 # Shell integrations
 eval "$(thefuck --alias)"
@@ -142,7 +144,7 @@ eval "$(atuin init zsh)"
 
 if [ -f "$HOME/.ssh/github" ]; then
   if ! ssh-add -l | grep -q "rodneyosodo.com"; then
-    eval `keychain --quiet --eval $HOME/.ssh/github`
+    eval `keychain --quiet --ssh-allow-forwarded --eval $HOME/.ssh/github`
   fi
 else
   echo "File "~/.ssh/github" does not exist."
@@ -192,3 +194,18 @@ function clean_docker() {
   fi
 }
 eval "$(uv generate-shell-completion zsh)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# pnpm
+export PNPM_HOME="/home/rodneyosodo/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

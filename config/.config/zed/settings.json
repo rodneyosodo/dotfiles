@@ -7,14 +7,39 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "icon_theme": "VSCode Great Icons Theme",
+  "git_panel": {
+    "tree_view": true
+  },
+  "inlay_hints": {
+    "enabled": false
+  },
+  "buffer_font_features": {
+    "calt": 0
+  },
+  "base_keymap": "VSCode",
+  "minimap": {
+    "show": "never"
+  },
+  "icon_theme": "Colored Zed Icons Theme Dark",
   "ssh_connections": [
     {
       "host": "bohr",
       "username": "rodneyosodo",
       "projects": [
         {
-          "paths": ["~/homelab"]
+          "paths": [
+            "~/homelab"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "uv-dell-tdx",
+      "projects": [
+        {
+          "paths": [
+            "/home/rodney"
+          ]
         }
       ]
     }
@@ -39,6 +64,12 @@
     "button": true
   },
   "languages": {
+    "YAML": {
+      "indent_guides": {
+        "background_coloring": "disabled"
+      },
+      "tab_size": 2
+    },
     "Markdown": {
       "soft_wrap": "editor_width"
     }
@@ -53,13 +84,13 @@
   "scroll_beyond_last_line": "one_page",
   "agent": {
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4"
-    },
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    }
   },
-  "theme": "Gruvbox Dark Hard",
+  "theme": "Gruvbox Dark",
   "telemetry": {
-    "diagnostics": true,
+    "diagnostics": false,
     "metrics": false
   },
   "enable_language_server": true,
@@ -93,5 +124,13 @@
     "vscode-great-icons": true,
     "wakatime": true,
     "zig": true
+  },
+  "lsp": {
+    "clangd": {
+      "binary": {
+        "path": "/usr/bin/clangd",
+        "arguments": []
+      }
+    }
   }
 }

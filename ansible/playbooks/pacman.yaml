@@ -43,7 +43,8 @@
           - pacman-contrib
         use: yay
         state: latest
-      become: no
+      become: yes
+      become_user: root
 
     - name: Start paccache.timer
       ansible.builtin.systemd_service:
