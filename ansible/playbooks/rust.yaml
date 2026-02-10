@@ -16,6 +16,22 @@
         rustup component add clippy cargo rustfmt rust-std
 
     - name: Install Cargo Tools
-      ansible.builtin.shell:
-        cmd: cargo install du-dust fd-find ripgrep cargo-generate jwt-cli wasm-pack git-cliff
-        executable: /bin/bash
+      ansible.builtin.shell: |
+        cargo install --force TidyTUI
+        cargo install --force cargo-dist
+        cargo install --force cargo-generate
+        cargo install --force cargo-tarpaulin
+        cargo install --force du-dust
+        cargo install --force dua
+        cargo install --force dua-cli
+        cargo install --force fd-find
+        cargo install --force git-cliff
+        cargo install --force gqlint
+        cargo install --force jwt-cli
+        cargo install --force lumen
+        cargo install --force medium-to-markdown
+        cargo install --force mini-redis
+        cargo install --force ripgrep
+        cargo install --force sleek
+        cargo install --force trippy
+        cargo install --force wasm-pack

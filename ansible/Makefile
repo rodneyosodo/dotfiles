@@ -1,14 +1,11 @@
-.PHONY: ping
-ping:
+ping: ## Run a ping test to the server
 	ansible-playbook playbooks/ping.yaml --connection=local
 
-.PHONY: prep
-prep:
+prep: ## Install ansible collections
 	ansible-galaxy collection install community.general
 	ansible-galaxy collection install kewlfft.aur
 
-.PHONY: setup-desktop
-setup-desktop: prep
+setup-desktop: prep ## Setup desktop environment (runs prep)
 	ansible-playbook playbooks/yay.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/pacman.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/packages/desktop.yaml --connection=local --ask-become-pass
@@ -18,19 +15,20 @@ setup-desktop: prep
 	ansible-playbook playbooks/go.yaml --connection=local
 	ansible-playbook playbooks/rust.yaml --connection=local
 
-.PHONY: install-desktop
-install-desktop: prep
+install-desktop: prep ## Install desktop packages (runs prep)
 	ansible-playbook playbooks/packages/desktop.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/go.yaml --connection=local
 	ansible-playbook playbooks/rust.yaml --connection=local
 
-.PHONY: help
-help:
-	@echo "This Makefile is used to install dotfiles"
-	@echo ""
-	@echo "Usage:"
-	@echo "  make ping            - ping the server"
-	@echo "  make prep            - install ansible collections"
-	@echo "  make setup-desktop   - install desktop packages(runs prep)"
-	@echo "  make install-desktop - install desktop packages(runs prep)"
-	@echo "  make help            - show this help message"
+export-packages: ## Export installed packages to playbooks/packages/desktop.txt
+	pacman -Qqe > playbooks/packages/desktop.txt
+
+export-go-packages: ## Export installed go packages to playbooks/go.yaml
+	python3 scripts/export_packages.py go playbooks/go.yaml
+
+export-cargo-packages: ## Export installed cargo packages to playbooks/rust.yaml
+	python3 scripts/export_packages.py cargo playbooks/rust.yaml
+
+help: ## Show this help message
+	@which awk > /dev/null || (echo "awk not found. Please install it from https://www.gnu.org/software/gawk/manual/gawk.html" && exit 1)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[$$()% a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-28s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
