@@ -25,11 +25,20 @@
       become: yes
       remote_user: root
 
+    - name: Configure passwordless sudo for pacman
+      copy:
+        dest: /etc/sudoers.d/11-install-aur
+        content: |
+          {{ ansible_facts['env']['USER'] }} ALL=(ALL) NOPASSWD: /usr/bin/pacman
+        mode: "0440"
+        validate: /usr/sbin/visudo -cf %s
+      become: yes
+
     - name: Ensure build directory exists with correct permissions
       file:
-        path: "{{ ansible_env.HOME }}/.cache/yay"
+        path: "{{ ansible_facts['env']['HOME'] }}/.cache/yay"
         state: directory
-        owner: "{{ ansible_env.USER }}"
+        owner: "{{ ansible_facts['env']['USER'] }}"
         mode: "0755"
       become: no
 
@@ -39,8 +48,6 @@
         use: yay
         state: latest
       become: no
-      environment:
-        SUDO_ASKPASS: /bin/true
 
     - name: Remove unnecessary packages
       community.general.pacman:
@@ -60,12 +67,14 @@
           - syncthing
         use: yay
         state: present
+      become: no
 
     - name: Start Syncthing Service
       ansible.builtin.systemd_service:
-        name: syncthing@rodneyosodo
+        name: syncthing
         state: started
         enabled: true
+        scope: user
       register: syncthing
 
     - name: Start tailscaled
@@ -73,7 +82,7 @@
         name: tailscaled
         state: started
         enabled: true
-        daemon_reload: true
+      become: yes
 
     - name: Install Reflector
       kewlfft.aur.aur:
@@ -81,30 +90,10 @@
           - reflector
         use: yay
         state: present
+      become: no
 
     - name: Update mirrorlist
       ansible.builtin.shell: |
         cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
         reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
       become: yes
-      become_user: root
-
-    - name: Install auto-cpufreq
-      kewlfft.aur.aur:
-        name:
-          - auto-cpufreq
-        use: yay
-        state: present
-
-    - name: Start tailscaled
-      ansible.builtin.systemd_service:
-        name: auto-cpufreq
-        state: started
-        enabled: true
-        daemon_reload: true
-
-    - name: Install auto-cpufreq
-      ansible.builtin.shell: |
-        auto-cpufreq --install
-      become: yes
-      become_user: root

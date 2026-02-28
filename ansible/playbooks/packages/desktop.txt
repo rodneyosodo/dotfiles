@@ -228,7 +228,7 @@ teams
 tecla
 terraform
 thefuck
-tinygo
+tinygo-bin
 tldr
 tmux
 totem

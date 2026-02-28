@@ -17,6 +17,7 @@
         name: docker
         state: started
         enabled: true
+      become: yes
 
     - name: Add Current User to Docker Group
       ansible.builtin.shell:
@@ -29,4 +30,5 @@
         name: libvirtd
         state: restarted
         daemon_reload: true
+      become: yes
 
