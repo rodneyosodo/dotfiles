@@ -1,7 +1,7 @@
 [user]
 	email = socials@rodneyosodo.com
 	name = Rodney Osodo
-	signingkey = ~/.ssh/github.pub
+	signingkey = /home/rodneyosodo/.ssh/github
 
 [core]
   editor = nvim
@@ -61,6 +61,15 @@
 
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
+
 [gitbutler]
 	gitbutlerCommitter = 0
 	aiOpenAIKeyOption = bringYourOwn
+
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential

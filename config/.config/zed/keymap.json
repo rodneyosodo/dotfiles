@@ -146,7 +146,7 @@
     "bindings": {
       "alt-]": "editor::NextEditPrediction",
       "alt-[": "editor::PreviousEditPrediction",
-      "ctrl-right": "editor::AcceptPartialEditPrediction"
+      "ctrl-right": "editor::AcceptNextWordEditPrediction"
     }
   },
   {

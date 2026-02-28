@@ -134,6 +134,7 @@ export PATH=$PATH:$GOBIN
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 export ZEPHYR_BASE=~/zephyrproject/zephyr
+export PATH=$PATH:~/.bun/bin
 
 # Shell integrations
 eval "$(thefuck --alias)"
@@ -209,3 +210,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+[[ -s "/home/rodneyosodo/.gvm/scripts/gvm" ]] && source "/home/rodneyosodo/.gvm/scripts/gvm"
+
+# opencode
+export PATH=/home/rodneyosodo/.opencode/bin:$PATH
