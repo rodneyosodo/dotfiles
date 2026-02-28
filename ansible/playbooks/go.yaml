@@ -10,13 +10,18 @@
 
     - name: Install Golang Tools
       ansible.builtin.shell: |
+        go install -ldflags "-s -w" github.com/tristanisham/zvm@latest
         go install fortio.org/fortio@latest
         go install github.com/KnockOutEZ/diffdeck/cmd/diffdeck@latest
         go install github.com/Zxilly/go-size-analyzer/cmd/gsa@latest
+        go install github.com/asdf-vm/asdf/cmd/asdf@latest
+        go install github.com/derailed/k9s@latest
         go install github.com/go-critic/go-critic/cmd/gocritic@latest
         go install github.com/go-delve/delve/cmd/dlv@latest
-        go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+        go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
         go install github.com/google/pprof@latest
+        go install github.com/goreleaser/goreleaser@latest
+        go install github.com/jesseduffield/lazygit@latest
         go install github.com/oligot/go-mod-upgrade@latest
         go install github.com/orlangure/gocovsh@latest
         go install github.com/ramonvermeulen/whosthere@latest

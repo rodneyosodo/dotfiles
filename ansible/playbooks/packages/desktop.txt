@@ -28,9 +28,11 @@ ccache
 clang
 claude-code
 cloud-utils
+cloudflared
 cmake
 cmatrix
 commitizen-go
+copyq
 ctop
 dbeaver
 discord
@@ -150,6 +152,7 @@ mosquitto
 msedit
 mtr
 nano
+natscli
 nautilus
 neofetch
 neovim
@@ -172,6 +175,7 @@ pacman-contrib
 pandoc-cli
 parallel
 pavucontrol
+pika-backup
 platformio-core
 pnpm
 polkit-kde-agent
@@ -198,6 +202,7 @@ qt5-wayland
 qt6-wayland
 quota-tools
 rancher-k3d
+rclone
 redisinsight-bin
 reflector
 rpi-imager
