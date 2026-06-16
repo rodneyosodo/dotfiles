@@ -19,6 +19,7 @@
       ansible.builtin.shell: |
         cargo install --locked zellij
         cargo install --force TidyTUI
+        cargo install --force agent-browser
         cargo install --force amdgpu_top
         cargo install --force bandwhich
         cargo install --force cargo-component
@@ -28,6 +29,7 @@
         cargo install --force cargo-tarpaulin
         cargo install --force cargo-upgrades
         cargo install --force clorinde
+        cargo install --force dtop
         cargo install --force du-dust
         cargo install --force dua
         cargo install --force dua-cli
@@ -38,6 +40,7 @@
         cargo install --force lumen
         cargo install --force medium-to-markdown
         cargo install --force mini-redis
+        cargo install --force oxker
         cargo install --force pg-extras
         cargo install --force ripgrep
         cargo install --force rumdl
