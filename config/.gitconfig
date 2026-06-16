@@ -73,3 +73,6 @@
 [credential "https://gist.github.com"]
 	helper =
 	helper = !/usr/bin/gh auth git-credential
+[safe]
+	directory = /opt/esp-idf
+	directory = /opt/esp-idf/components/openthread/openthread

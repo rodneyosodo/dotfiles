@@ -7,14 +7,38 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "proxy": "",
+  "base_keymap": "Cursor",
+  "diff_view_style": "split",
+  "cli_default_open_behavior": "existing_window",
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "colorize_brackets": false,
+  "tasks": {
+    "enabled": true
+  },
+  "lsp_document_colors": "inlay",
+  "cursor_blink": true,
+  "text_rendering_mode": "platform_default",
+  "ui_font_family": ".ZedSans",
+  "buffer_font_family": ".ZedMono",
   "inlay_hints": {
+    "show_background": false,
+    "show_other_hints": true,
+    "show_parameter_hints": true,
+    "show_type_hints": false,
+    "show_value_hints": true,
     "enabled": true,
   },
   "buffer_font_features": {
     "calt": 0,
   },
   "minimap": {
-    "show": "auto",
+    "show": "never",
   },
   "lsp": {
     "vtsls": {
@@ -46,12 +70,20 @@
     },
   },
   "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    },
     "opencode": {
+      "default_config_options": {
+        "effort": "medium",
+        "model": "zai-coding-plan/glm-4.7"
+      },
       "type": "registry",
     },
   },
   "git_panel": {
-    "sort_by_path": true,
+    "dock": "left",
+    "sort_by_path": false,
     "tree_view": false,
   },
   "edit_predictions": {
@@ -115,6 +147,7 @@
   },
   "scroll_beyond_last_line": "one_page",
   "agent": {
+    "dock": "right",
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-sonnet-4",
@@ -122,7 +155,7 @@
   },
   "theme": {
     "mode": "dark",
-    "light": "Gruvbox Dark",
+    "light": "Gruvbox Light",
     "dark": "Gruvbox Dark Hard",
   },
   "telemetry": {
