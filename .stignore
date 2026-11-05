@@ -1,0 +1,101 @@
+// =====================================================================
+//  Syncthing ignore file for the ~/code folder
+//  Active at:  ~/code/.stignore  ->  ~/Downloads/dotfiles/.stignore
+//  Comments MUST start with "//" (a leading "#" is treated as a
+//  literal pattern by Syncthing, not a comment).
+//  (?d) prefix = ignored files may be deleted when a remote device
+//                deletes the parent directory (fixes delete conflicts
+//                like "directory has been deleted on a remote device
+//                but contains ignored files").
+//  Reference: https://docs.syncthing.net/users/ignoring.html
+// =====================================================================
+
+// --- Build & dependency artifacts ---
+(?d)node_modules/
+(?d)target/
+(?d)build/
+(?d)dist/
+(?d)out/
+(?d)output/
+(?d)obj/
+(?d)bin/
+(?d).cache/
+(?d).next/
+(?d).nuxt/
+(?d).vuepress/
+(?d).docusaurus/
+(?d)bower_components/
+(?d)jspm_packages/
+
+// --- Python ---
+(?d)__pycache__/
+(?d).venv/
+(?d)venv/
+(?d)env/
+(?d).pytest_cache/
+(?d).mypy_cache/
+(?d).ruff_cache/
+(?d).tox/
+(?d).nox/
+(?d).eggs/
+(?d)*.egg-info/
+*.pyc
+*.pyo
+
+// --- Rust ---
+(?d).cargo/
+
+// --- Terraform / IaC ---
+(?d).terraform/
+(?d).plan/
+*.tfstate
+*.tfstate.backup
+*.tfstate.bak
+
+// --- Databases & runtime data (never sync) ---
+pgdata/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.pid
+*.sock
+
+// --- IDEs & editors ---
+(?d).idea/
+(?d).vscode/
+(?d).vscode-server/
+*.iml
+*.swp
+*~
+
+// --- Java / Gradle / Android ---
+(?d).gradle/
+(?d).kotlin/
+*.class
+
+// --- Node tooling caches ---
+(?d).pnpm-store/
+(?d).yarn/
+(?d).npm/
+(?d).eslintcache
+(?d).prettiercache
+(?d).parcel-cache/
+(?d).tsbuildinfo
+
+// --- Buildroot / embedded toolchain downloads ---
+(?d)dl/
+(?d)riscv-toolchain/
+
+// --- Core dumps & large binaries ---
+core
+core.*
+*.core
+*.img
+*.iso
+
+// --- OS junk ---
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -12,14 +12,14 @@
   "diff_view_style": "split",
   "cli_default_open_behavior": "existing_window",
   "outline_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "colorize_brackets": false,
   "tasks": {
-    "enabled": true
+    "enabled": true,
   },
   "lsp_document_colors": "inlay",
   "cursor_blink": true,
@@ -71,17 +71,22 @@
   },
   "agent_servers": {
     "claude-acp": {
-      "type": "registry"
+      "default_config_options": {
+        "model": "sonnet"
+      },
+      "type": "registry",
     },
     "opencode": {
       "default_config_options": {
         "effort": "medium",
-        "model": "zai-coding-plan/glm-4.7"
+        "model": "opencode-go/deepseek-v4-pro",
       },
       "type": "registry",
     },
   },
   "git_panel": {
+    "sort_by": "path",
+    "group_by": "status",
     "dock": "left",
     "sort_by_path": false,
     "tree_view": false,
@@ -149,8 +154,10 @@
   "agent": {
     "dock": "right",
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4",
+      "effort": "max",
+      "enable_thinking": true,
+      "provider": "opencode",
+      "model": "go/deepseek-v4-flash",
     },
   },
   "theme": {
@@ -193,5 +200,9 @@
     "vscode-great-icons": true,
     "wakatime": true,
     "zig": true,
+  },
+  "code_actions_on_format": {
+    "source.organizeImports.biome": true,
+    "source.fixAll.biome": true,
   },
 }

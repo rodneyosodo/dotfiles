@@ -105,7 +105,7 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 zstyle :omz:plugins:ssh-agent agent-forwarding yes
-zstyle :omz:plugins:ssh-agent identities github
+zstyle :omz:plugins:ssh-agent identities github twiga-ssh
 zstyle :omz:plugins:ssh-agent lifetime 30d
 
 
@@ -137,20 +137,46 @@ export ZEPHYR_BASE=~/zephyrproject/zephyr
 export PATH=$PATH:~/.bun/bin
 
 # Shell integrations
-eval "$(thefuck --alias)"
-eval "$(fzf --zsh)"
-eval `ssh-agent -s`
-eval "$(pyenv init - zsh)"
-eval "$(atuin init zsh)"
-
-if [ -f "$HOME/.ssh/github" ]; then
-  if ! ssh-add -l | grep -q "rodneyosodo.com"; then
-    eval `keychain --quiet --ssh-allow-forwarded --eval $HOME/.ssh/github`
-  fi
-else
-  echo "File "~/.ssh/github" does not exist."
+if command -v thefuck &>/dev/null; then
+  eval "$(thefuck --alias)"
 fi
 
+if command -v fzf &>/dev/null; then
+  eval "$(fzf --zsh)"
+fi
+
+eval `ssh-agent -s`
+
+if command -v pyenv &>/dev/null; then
+  eval "$(pyenv init - zsh)"
+fi
+
+if command -v atuin &>/dev/null; then
+  eval "$(atuin init zsh)"
+fi
+
+# SSH key management with error handling
+add_ssh_keys() {
+  local key_file="$1"
+  local key_name="$2"
+  
+  if [ -f "$key_file" ]; then
+    if ! ssh-add -l | grep -q "$key_name"; then
+      if command -v keychain &>/dev/null; then
+        eval `keychain --quiet --ssh-allow-forwarded --eval "$key_file"`
+      else
+        ssh-add "$key_file" 2>/dev/null || echo "Could not add SSH key: $key_file"
+      fi
+    fi
+  else
+    echo "SSH key file not found: $key_file"
+  fi
+}
+
+add_ssh_keys "$HOME/.ssh/github" "github"
+add_ssh_keys "$HOME/.ssh/twiga-ssh" "twiga.com"
+
+# NPM packages setup
 if [ ! -d "${HOME}/.npm-packages" ]; then
   mkdir "${HOME}/.npm-packages"
 fi
@@ -194,24 +220,32 @@ function clean_docker() {
     docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
   fi
 }
-eval "$(uv generate-shell-completion zsh)"
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+if command -v uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+# SDKMAN setup
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# NVM setup
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# pnpm
-export PNPM_HOME="/home/rodneyosodo/.local/share/pnpm"
+# pnpm setup
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
-[[ -s "/home/rodneyosodo/.gvm/scripts/gvm" ]] && source "/home/rodneyosodo/.gvm/scripts/gvm"
+# GVM setup
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
-# opencode
-export PATH=/home/rodneyosodo/.opencode/bin:$PATH
+# OpenCode setup
+if [ -f "$HOME/.opencode/bin/opencode" ]; then
+  export PATH="$HOME/.opencode/bin:$PATH"
+fi
+# bun completions
+[ -s "/home/rodneyosodo/.bun/_bun" ] && source "/home/rodneyosodo/.bun/_bun"
