@@ -51,7 +51,6 @@ docker-compose
 dog
 dolphin
 downgrade
-dunst
 easyeda-bin
 efibootmgr
 epiphany
@@ -121,6 +120,7 @@ gvfs-smb
 gvfs-wsdd
 hellwal
 helm
+hokum-bin
 html-xml-utils
 htop
 httpie
@@ -214,6 +214,7 @@ qemu-desktop
 qemu-full
 qt5-wayland
 qt6-wayland
+quickshell
 quota-tools
 rancher-k3d
 rapidraw-bin
@@ -240,7 +241,6 @@ sshpass
 staticcheck
 stow
 sushi
-swaync
 swtpm
 syncthing
 tailscale
@@ -279,7 +279,6 @@ wabt
 wakatime
 wasmer
 wasmtime
-waybar
 wget
 whois
 wireless_tools
