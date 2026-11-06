@@ -1,0 +1,8 @@
+// Hokum's configuration. The settings window edits this file too, keeping your comments.
+// Reference: https://github.com/anomalyco/hokum/blob/dev/docs/theming.md
+theme "soft"
+
+behaviour {
+    stay 4
+    show-at-most 3
+}
