@@ -109,7 +109,7 @@ PanelWindow {
 
     Process {
         id: menuProc
-        command: ["wofi", "--show", "drun"]
+        command: ["vicinae", "toggle"]
     }
 
     Process {

@@ -265,6 +265,7 @@ unrar
 untrunc-anthwlock-bin
 upx
 uv
+vicinae-bin
 vim
 virt-install
 virt-manager
@@ -285,7 +286,6 @@ wireless_tools
 wl-clipboard
 wlogout
 woff2-font-awesome
-wofi
 xdg-desktop-portal-gnome
 xdg-desktop-portal-hyprland
 xdg-user-dirs-gtk

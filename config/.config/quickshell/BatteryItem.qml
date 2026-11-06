@@ -21,14 +21,14 @@ Widget {
 
     text: {
         if (!present) return "";
-        if (charging) return Theme.iconCharging;
+        if (charging) return `${Theme.iconCharging} ${percent}%`;
         const icons = Theme.iconsBattery;
         const i = Math.min(icons.length - 1, Math.floor(percent / 100 * icons.length));
-        return icons[Math.max(0, i)];
+        return `${icons[Math.max(0, i)]} ${percent}%`;
     }
 
+    iconSlot: false
     visible: present
-    dimmed: full && !charging
 
     color: {
         if (charging || full) return Theme.foreground;
