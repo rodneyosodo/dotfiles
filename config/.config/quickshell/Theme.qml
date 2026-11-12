@@ -60,6 +60,8 @@ Singleton {
     readonly property string iconPower: "⏻"
     readonly property string iconAwake: icon(0xF0176)   // coffee
     readonly property string iconIdle: icon(0xF06CA)    // coffee outline
+    readonly property string iconSun: icon(0xF0599)     // weather sunny
+    readonly property string iconMoon: icon(0xF0594)    // weather night
 
     readonly property string iconWorkspaceActive: icon(0xF14FB)
 

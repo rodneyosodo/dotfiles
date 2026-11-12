@@ -1,0 +1,7 @@
+[
+    { "zone": "America/Los_Angeles", "label": "San Francisco" },
+    "Europe/London",
+    { "zone": "Europe/Berlin", "label": "Frankfurt / Paris / Belgrade" },
+    { "zone": "Asia/Kolkata", "label": "Mumbai" },
+    { "zone": "Asia/Shanghai", "label": "Shenzhen" }
+]
