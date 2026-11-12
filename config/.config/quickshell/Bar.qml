@@ -100,6 +100,16 @@ PanelWindow {
         BatteryItem {}
 
         Widget {
+            text: Idle.keepAwake ? Theme.iconAwake : Theme.iconIdle
+            color: Idle.keepAwake ? Theme.accent : Theme.foreground
+            dimmed: !Idle.keepAwake
+            tooltip: Idle.keepAwake
+                ? "Keep awake: on\nScreen stays on, no lock or suspend\nClick to allow idle"
+                : "Keep awake: off\nDims, locks, turns off and suspends when idle\nClick to keep awake"
+            onActivated: Idle.toggle()
+        }
+
+        Widget {
             text: Theme.iconPower
             color: Theme.urgent
             tooltip: "Session"

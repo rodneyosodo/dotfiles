@@ -288,6 +288,8 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("XDG_CURRENT_DESKTOP=sway flameshot gui"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("hokum"))
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("dusk"))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("qs ipc call idle toggle"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))

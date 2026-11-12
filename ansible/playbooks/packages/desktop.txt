@@ -125,7 +125,9 @@ html-xml-utils
 htop
 httpie
 hyperfine
+hypridle
 hyprland
+hyprlock
 hyprpicker
 inetutils
 inkscape

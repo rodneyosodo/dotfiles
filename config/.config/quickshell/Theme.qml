@@ -58,6 +58,8 @@ Singleton {
     readonly property string iconDisk: icon(0xF02CA)
     readonly property string iconThermometer: icon(0xF050F)
     readonly property string iconPower: "⏻"
+    readonly property string iconAwake: icon(0xF0176)   // coffee
+    readonly property string iconIdle: icon(0xF06CA)    // coffee outline
 
     readonly property string iconWorkspaceActive: icon(0xF14FB)
 
