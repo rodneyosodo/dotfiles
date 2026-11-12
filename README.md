@@ -215,18 +215,36 @@ atuin login
 atuin sync
 ```
 
-## Desktop services
+## Desktop shell
 
-Hyprland starts the bar, launcher and wallpaper itself. These user services
-need enabling once per machine:
+Hyprland (Lua config), the Quickshell bar, Hokum notifications, Vicinae, hypridle/hyprlock and the dusk power menu. Everything except signing in comes from the steps above:
+
+| What                                                       | Where it comes from                                         |
+| ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Packages the shell needs, incl. the CodeNewRoman Nerd Font | `make setup-desktop` → "Install desktop shell packages"     |
+| `hokum.service`, `hypridle.service` enabled                | `make setup-desktop` → "Enable desktop shell user services" |
+| Empty, private `~/.config/quickshell-calendars.json`       | `make setup-desktop` → "Create the calendar feed list"      |
+| `dusk`, `ai-usagebar` in `~/.cargo/bin`                    | `make setup-desktop` → `rust.yaml`                          |
+| Configs under `~/.config`                                  | `make install-dotfiles` (stow)                              |
+
+The user services start with the next graphical login. `hyprland.lua` puts `~/.cargo/bin` on Hyprland's `PATH`, so the bar and keybinds find the cargo tools without a shell profile.
+
+Then, by hand, once per machine:
 
 ```bash
-systemctl --user enable --now hokum.service     # notifications
-systemctl --user enable --now hypridle.service  # dim, lock, screen off, suspend when idle
+claude                # sign in: Claude usage in the bar
+opencode auth login   # sign in to OpenCode: OpenCode Go usage in the bar
 ```
 
-`dusk` (power menu) is installed by the Rust playbook into `~/.cargo/bin`.
+and paste your Google Calendar secret iCal address into `~/.config/quickshell-calendars.json` (see below). Check it all with:
+
+```bash
+dusk doctor                              # locker, logind, blur rule
+ai-usagebar usage                        # Claude and OpenCode Go
+systemctl --user is-enabled hokum hypridle
+qs log | grep -iE "warn|error"           # bar errors
+```
 
 ## Bar, clock and Google Calendar
 
-The bar, its clock popup (calendar, time zones) and Google Calendar sync are documented in [config/.config/quickshell/README.md](config/.config/quickshell/README.md). Calendar links go in `~/.config/quickshell-calendars.json`, which is not part of these dotfiles and must never be committed.
+The bar, its clock popup (calendar, time zones), AI usage and Google Calendar sync are documented in [config/.config/quickshell/README.md](config/.config/quickshell/README.md). Calendar links go in `~/.config/quickshell-calendars.json`, which is not part of these dotfiles and must never be committed.

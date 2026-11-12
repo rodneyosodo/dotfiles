@@ -49,6 +49,73 @@
         state: latest
       become: no
 
+    # The desktop shell (Hyprland Lua config, Quickshell bar, Hokum, Vicinae,
+    # hypridle/hyprlock, dusk) needs these whether or not desktop.txt has
+    # them. desktop.txt is regenerated from `pacman -Qqe`, which drops
+    # anything installed as a dependency, so they are pinned here instead.
+    - name: Install desktop shell packages
+      kewlfft.aur.aur:
+        name:
+          - hyprland
+          - quickshell            # bar
+          - hokum-bin             # notifications
+          - vicinae-bin           # launcher
+          - hypridle              # idle: dim, lock, screen off, suspend
+          - hyprlock              # lock screen
+          - awww                  # wallpaper
+          - ghostty               # terminal
+          - otf-codenewroman-nerd # bar, lock screen and popup font (Propo)
+          - libpulse              # pactl: volume (PulseAudio)
+          - pavucontrol
+          - playerctl             # media keys
+          - brightnessctl         # brightness keys, idle dimming
+          - upower                # battery
+          - bluez
+          - bluez-utils
+          - networkmanager        # network item, nmtui
+          - btop                  # CPU/memory/disk click
+          - flameshot             # SUPER+O
+          - libnotify             # notify-send (ai-usagebar, calendar)
+          - xdg-utils             # xdg-open for meeting links
+          - python                # clock popup calendar sync
+          - stow
+          # Build dependencies of dusk (rust.yaml)
+          - libxkbcommon
+          - wayland
+          - vulkan-icd-loader
+        use: yay
+        state: present
+      become: no
+
+    - name: Enable desktop shell user services
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        enabled: true
+        scope: user
+      loop:
+        - hokum.service     # notifications
+        - hypridle.service  # idle and lock-before-sleep
+      become: no
+
+    # Calendar links are credentials, so the feed list lives outside the
+    # dotfiles. Create an empty one, private, without touching an existing
+    # file. See config/.config/quickshell/README.md.
+    - name: Create the calendar feed list
+      ansible.builtin.copy:
+        dest: "{{ ansible_facts['env']['HOME'] }}/.config/quickshell-calendars.json"
+        content: |
+          [
+              {
+                  "name": "Google",
+                  "url": "",
+                  "color": "#89b4fa",
+                  "enabled": true
+              }
+          ]
+        mode: "0600"
+        force: false
+      become: no
+
     - name: Remove unnecessary packages
       community.general.pacman:
         name:
