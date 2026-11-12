@@ -15,6 +15,16 @@ Singleton {
     readonly property color urgent: "#f38ba8"
     readonly property color warning: "#fab387"
     readonly property color good: "#a6e3a1"
+    readonly property color caution: "#f9e2af"
+
+    // Quota scale, after omarchy-ai-usage: green under 50% used, yellow from
+    // 50, orange from 70, red from 90.
+    function usageColor(percent) {
+        if (percent >= 90) return urgent;
+        if (percent >= 70) return warning;
+        if (percent >= 50) return caution;
+        return good;
+    }
 
     readonly property color pillBg: Qt.rgba(base.r, base.g, base.b, 0.72)
     readonly property color tooltipBg: Qt.rgba(base.r, base.g, base.b, 0.96)
@@ -63,6 +73,8 @@ Singleton {
     readonly property string iconSun: icon(0xF0599)     // weather sunny
     readonly property string iconMoon: icon(0xF0594)    // weather night
     readonly property string iconVideo: icon(0xF0567)   // video
+    readonly property string iconClaude: icon(0xF06A9)  // robot, as ai-usagebar uses
+    readonly property string iconOpenCode: icon(0xF0169) // code braces
 
     readonly property string iconWorkspaceActive: icon(0xF14FB)
 

@@ -50,11 +50,12 @@ PanelWindow {
         ActiveWindow {}
     }
 
-    // ---- center: clock ----
+    // ---- center: clock, AI usage ----
     Pill {
         anchors.centerIn: parent
 
         ClockItem {}
+        AIUsageItem {}
     }
 
     // ---- right: system stats, audio, bluetooth, network, battery, power ----

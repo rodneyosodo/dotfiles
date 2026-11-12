@@ -1,0 +1,34 @@
+# ai-usagebar: plan usage for the Quickshell bar (AIUsageItem.qml).
+# Only Claude and OpenCode Go. Both reuse their CLI logins, so there are no
+# keys in here: Claude from ~/.claude/.credentials.json, OpenCode Go from
+# ~/.local/share/opencode/auth.json. Never put an api_key in this file; it is
+# in the dotfiles.
+
+[ui]
+primary = "anthropic"
+overview_vendors = ["anthropic", "opencode-go"]
+
+[anthropic]
+enabled = true
+
+[opencode-go]
+enabled = true
+# OpenCode 2 keeps the account login in its database. The "opencode-go" key
+# in auth.json is an inference key the usage endpoint rejects (HTTP 401), and
+# auth.json is read first by default, so point at the database only.
+auth_paths = ["~/.local/share/opencode/opencode.db"]
+
+# On by default upstream; off here.
+[openai]
+enabled = false
+
+[zai]
+enabled = false
+
+[openrouter]
+enabled = false
+
+# Quota warnings through notify-send (Hokum) when a window crosses 97%.
+[notifications]
+enabled = true
+threshold = 97

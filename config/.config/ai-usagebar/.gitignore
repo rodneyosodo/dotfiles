@@ -1,0 +1,4 @@
+# ai-usagebar can write credentials here (Nous OAuth). Track only the config.
+*
+!.gitignore
+!config.toml

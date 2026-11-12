@@ -20,6 +20,7 @@
         cargo install --locked zellij
         cargo install --git https://github.com/rodneyosodo/dusk --force --locked dusk
         cargo install --force TidyTUI
+        cargo install --force --locked ai-usagebar
         cargo install --force agent-browser
         cargo install --force amdgpu_top
         cargo install --force bandwhich
