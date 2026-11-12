@@ -63,6 +63,7 @@ PanelWindow {
             scrub = 0;
             goToday();
             keys.forceActiveFocus();
+            CalendarState.refreshIfOld();
         }
     }
 
@@ -70,6 +71,21 @@ PanelWindow {
         viewYear = now.getFullYear();
         viewMonth = now.getMonth();
         pickMode = "days";
+        selectedDate = now;
+    }
+
+    // Day whose agenda is shown, with calendar sync on.
+    property var selectedDate: new Date()
+
+    function formatTime(date) {
+        return Qt.formatTime(date, "HH:mm");
+    }
+
+    function agendaTime(ev) {
+        if (ev.allDay) return "all day";
+        // Continues from an earlier day: say so rather than show its start.
+        if (!sameDay(ev.startDate, selectedDate)) return "cont.";
+        return formatTime(ev.startDate);
     }
 
     // ‹ › and the wheel: a month in the day grid, a year in the month picker,
@@ -527,6 +543,16 @@ PanelWindow {
                         readonly property bool inMonth: !weekCell && date.getMonth() === root.viewMonth
                         readonly property bool today: !weekCell && root.sameDay(date, root.now)
                         readonly property bool weekend: index % 8 >= 6
+                        readonly property bool selected: !weekCell && CalendarState.enabled
+                            && root.sameDay(date, root.selectedDate)
+                        // One dot per calendar with something on, at most three.
+                        readonly property var dots: {
+                            if (weekCell || !CalendarState.enabled) return [];
+                            const seen = [];
+                            for (const ev of CalendarState.eventsOn(date))
+                                if (seen.indexOf(ev.color) < 0) seen.push(ev.color);
+                            return seen.slice(0, 3);
+                        }
 
                         width: grid.cellW
                         height: grid.cellH
@@ -534,16 +560,19 @@ PanelWindow {
                         Rectangle {
                             anchors.centerIn: parent
                             width: 30
-                            height: 23
+                            height: 24
                             radius: 8
-                            visible: parent.today
-                            color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.18)
-                            border.width: 1
-                            border.color: Theme.accent
+                            visible: parent.today || parent.selected || dayArea.containsMouse
+                            color: parent.today
+                                ? Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.18)
+                                : root.faint
+                            border.width: parent.today || parent.selected ? 1 : 0
+                            border.color: parent.today ? Theme.accent : root.dim
                         }
 
                         Text {
                             anchors.centerIn: parent
+                            anchors.verticalCenterOffset: parent.dots.length ? -3 : 0
                             text: parent.weekCell
                                 ? root.isoWeek(root.cells[parent.week * 7 + 3])
                                 : parent.date.getDate()
@@ -557,9 +586,168 @@ PanelWindow {
                             font.pixelSize: parent.weekCell ? 10 : 13
                             font.bold: parent.today
                         }
+
+                        Row {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 3
+                            spacing: 2
+
+                            Repeater {
+                                model: parent.parent.dots
+
+                                Rectangle {
+                                    width: 4
+                                    height: 4
+                                    radius: 2
+                                    color: modelData
+                                }
+                            }
+                        }
+
+                        // Days are only clickable with sync on: picking one
+                        // shows its agenda.
+                        MouseArea {
+                            id: dayArea
+                            anchors.fill: parent
+                            enabled: !parent.weekCell && CalendarState.enabled
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                root.selectedDate = parent.date;
+                                if (!parent.inMonth) {
+                                    root.viewYear = parent.date.getFullYear();
+                                    root.viewMonth = parent.date.getMonth();
+                                }
+                            }
+                        }
                     }
                 }
 
+            }
+        }
+
+        // Agenda for the selected day, with calendar sync on.
+        Column {
+            id: agenda
+            visible: CalendarState.enabled
+            width: parent.width
+            spacing: 6
+
+            readonly property var events: CalendarState.eventsOn(root.selectedDate)
+            readonly property int maxRows: 5
+
+            Rectangle {
+                width: parent.width
+                height: 1
+                color: root.faint
+            }
+
+            Item {
+                width: parent.width
+                height: 16
+
+                Text {
+                    anchors.left: parent.left
+                    text: root.sameDay(root.selectedDate, root.now)
+                        ? "TODAY"
+                        : Qt.formatDate(root.selectedDate, "ddd d MMM").toUpperCase()
+                    color: root.dim
+                    font.family: Theme.fontFamily
+                    font.pixelSize: 11
+                    font.letterSpacing: 1.5
+                }
+
+                // Sync state; click to sync now.
+                Link {
+                    anchors.right: parent.right
+                    text: {
+                        if (CalendarState.syncing) return "SYNCING…";
+                        if (CalendarState.failed.length)
+                            return `${CalendarState.failed.map(f => f.name).join(", ")}: ${CalendarState.failed[0].error}  ↻`.toUpperCase();
+                        return CalendarState.updated ? `${CalendarState.updated.slice(11)}  ↻` : "↻";
+                    }
+                    restColor: CalendarState.failed.length ? Theme.warning : root.dim
+                    font.pixelSize: 10
+                    font.letterSpacing: 1
+                    active: !CalendarState.syncing
+                    onClicked: CalendarState.refresh()
+                }
+            }
+
+            Text {
+                visible: agenda.events.length === 0
+                text: "Nothing scheduled"
+                color: root.dim
+                font.family: Theme.fontFamily
+                font.pixelSize: 12
+            }
+
+            Repeater {
+                model: agenda.events.slice(0, agenda.maxRows)
+
+                Item {
+                    id: evRow
+                    required property var modelData
+
+                    width: agenda.width
+                    height: 18
+
+                    Rectangle {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 3
+                        height: 14
+                        radius: 1.5
+                        color: evRow.modelData.color
+                    }
+
+                    Text {
+                        id: evTime
+                        x: 10
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 52
+                        text: root.agendaTime(evRow.modelData)
+                        color: root.dim
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 12
+                    }
+
+                    Text {
+                        anchors.left: evTime.right
+                        anchors.right: joinLink.visible ? joinLink.left : parent.right
+                        anchors.rightMargin: 8
+                        anchors.verticalCenter: parent.verticalCenter
+                        elide: Text.ElideRight
+                        text: evRow.modelData.title
+                        color: Theme.foreground
+                        font.family: Theme.fontFamily
+                        font.pixelSize: 12
+                        textFormat: Text.PlainText
+                    }
+
+                    // Meet, Zoom or Teams link found in the event.
+                    Link {
+                        id: joinLink
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: evRow.modelData.link !== ""
+                        text: Theme.iconVideo + " join"
+                        restColor: Theme.accent
+                        font.pixelSize: 11
+                        onClicked: {
+                            Quickshell.execDetached(["xdg-open", evRow.modelData.link]);
+                            ClockState.open = false;
+                        }
+                    }
+                }
+            }
+
+            Text {
+                visible: agenda.events.length > agenda.maxRows
+                text: `+${agenda.events.length - agenda.maxRows} more`
+                color: root.dim
+                font.family: Theme.fontFamily
+                font.pixelSize: 11
             }
         }
 

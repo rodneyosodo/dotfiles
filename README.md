@@ -214,3 +214,19 @@ sudo tailscale up --ssh
 atuin login
 atuin sync
 ```
+
+## Desktop services
+
+Hyprland starts the bar, launcher and wallpaper itself. These user services
+need enabling once per machine:
+
+```bash
+systemctl --user enable --now hokum.service     # notifications
+systemctl --user enable --now hypridle.service  # dim, lock, screen off, suspend when idle
+```
+
+`dusk` (power menu) is installed by the Rust playbook into `~/.cargo/bin`.
+
+## Bar, clock and Google Calendar
+
+The bar, its clock popup (calendar, time zones) and Google Calendar sync are documented in [config/.config/quickshell/README.md](config/.config/quickshell/README.md). Calendar links go in `~/.config/quickshell-calendars.json`, which is not part of these dotfiles and must never be committed.
