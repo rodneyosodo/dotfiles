@@ -1,0 +1,30 @@
+// ~/.config/dusk/config.kdl
+//
+// No config is needed: dusk looks good with the built-in defaults. Uncomment or copy a line.
+
+theme "dusk"          // dusk, halo, mono, or a path to a theme.kdl
+// layout "row"       // row, grid, list
+// appearance "auto"  // auto, light, dark
+
+// tokens {
+//     accent "#d38be0"
+//     radius 28
+// }
+// tokens "light" {
+//     dim "white/40"
+// }
+
+// hide "hibernate"
+// order "lock" "logout" "suspend" "reboot" "shutdown"
+
+// Change one field of a built-in; the rest keep their defaults.
+// action "logout" { run "hyprshutdown"; key "e" }
+
+// Add your own.
+// action "firmware" {
+//     label "Firmware"
+//     icon "~/.config/dusk/icons/chip.svg"
+//     run "systemctl reboot --firmware-setup"
+//     key "f"
+//     confirm #true
+// }

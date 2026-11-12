@@ -11,7 +11,7 @@ rm -rf ~/.local/share/Trash/*
 ```bash
 rm -rf ~/.cache/*
 ```
-qw
+
 ## Clean Downloads
 
 ```bash

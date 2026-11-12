@@ -287,6 +287,7 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 
 hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("XDG_CURRENT_DESKTOP=sway flameshot gui"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("hokum"))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("dusk"))
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
@@ -384,14 +385,18 @@ hl.window_rule({
 
 -- Vicinae launcher: blur behind it, and no open/close animation
 hl.layer_rule({
-    name  = "vicinae-blur",
-    match = { namespace = "vicinae" },
-    blur  = true,
+    name         = "vicinae-blur",
+    match        = { namespace = "vicinae" },
+    blur         = true,
     ignore_alpha = 0,
 })
 
 hl.layer_rule({
-    name  = "vicinae-no-animation",
-    match = { namespace = "vicinae" },
+    name    = "vicinae-no-animation",
+    match   = { namespace = "vicinae" },
     no_anim = true,
 })
+
+-- dusk power menu: blur the desktop behind it, no open/close animation
+-- Kept on one line: `dusk doctor` only recognises the rule that way.
+hl.layer_rule({ name = "dusk", match = { namespace = "^dusk" }, blur = true, ignore_alpha = 0.02, no_anim = true })

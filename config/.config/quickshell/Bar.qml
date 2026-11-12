@@ -134,6 +134,6 @@ PanelWindow {
 
     Process {
         id: powerProc
-        command: ["wlogout"]
+        command: ["dusk"]
     }
 }

@@ -284,7 +284,6 @@ wget
 whois
 wireless_tools
 wl-clipboard
-wlogout
 woff2-font-awesome
 xdg-desktop-portal-gnome
 xdg-desktop-portal-hyprland
