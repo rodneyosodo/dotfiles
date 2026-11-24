@@ -1,35 +1,38 @@
 #!/usr/bin/env python3
 """
 Collect `go install` / `cargo install` commands from shell histories and
-atuin, then surgically update the ansible.builtin.shell block in the
-corresponding playbook YAML file.
+atuin, merge them with the playbook's current list, and rewrite that list.
 
 Usage:
     python3 scripts/export_packages.py go    playbooks/go.yaml
     python3 scripts/export_packages.py cargo playbooks/rust.yaml
+
+The playbooks keep their tools in a vars list (`go_tools`, `cargo_tools`)
+installed by a looped task, so only that list is rewritten. Every entry is
+validated: history lines are free text, and anything after a shell operator
+(`;`, `&&`, `|`, ...) or that isn't a plain crate name, module path or https
+git URL is dropped rather than written into a playbook.
 """
 
 import re
+import shlex
 import subprocess
 import sys
 from pathlib import Path
+
+# ---- history sources ----
 
 
 def _atuin(prefix: str) -> list[str]:
     try:
         out = subprocess.check_output(
-            ["atuin", "search", prefix],
+            ["atuin", "search", "--format", "{command}", prefix],
             stderr=subprocess.DEVNULL,
             text=True,
         )
     except (FileNotFoundError, subprocess.CalledProcessError):
         return []
-    lines = []
-    for line in out.splitlines():
-        parts = line.split("\t", 2)
-        if len(parts) >= 2:
-            lines.append(parts[1])
-    return lines
+    return out.splitlines()
 
 
 def _zsh_history(prefix: str) -> list[str]:
@@ -40,7 +43,6 @@ def _zsh_history(prefix: str) -> list[str]:
     for raw in path.read_text(errors="replace").splitlines():
         # strip zsh extended_history timestamp prefix  `: 1234567890:0;`
         cmd = re.sub(r"^:[^;]*;", "", raw)
-        # find the first occurrence of the prefix command in the line
         idx = cmd.find(prefix)
         if idx != -1:
             lines.append(cmd[idx:])
@@ -52,224 +54,219 @@ def _bash_history(prefix: str) -> list[str]:
     if not path.exists():
         return []
     return [
-        l for l in path.read_text(errors="replace").splitlines() if l.startswith(prefix)
+        l for l in path.read_text(errors="replace").splitlines() if prefix in l
     ]
 
 
-def _existing_yaml(yaml_path: Path, prefix: str) -> list[str]:
-    if not yaml_path.exists():
+def history(prefix: str) -> list[str]:
+    lines = _atuin(prefix) + _zsh_history(prefix) + _bash_history(prefix)
+    out = []
+    for line in lines:
+        idx = line.find(prefix)
+        if idx != -1:
+            out.append(line[idx:].rstrip("\\").strip())
+    return out
+
+
+# ---- tokenising ----
+
+SHELL_STOP = {";", "&&", "||", "|", "&", ">", ">>", "<", "2>", "2>&1", "#"}
+
+
+def tokens(line: str) -> list[str]:
+    """Words of the first command on the line, quotes resolved."""
+    try:
+        lexer = shlex.shlex(line, posix=True, punctuation_chars=";&|<>")
+        lexer.whitespace_split = True
+        lexer.commenters = "#"
+        words = list(lexer)
+    except ValueError:  # unbalanced quotes
         return []
-    return [
-        l.strip()
-        for l in yaml_path.read_text().splitlines()
-        if l.strip().startswith(prefix)
-    ]
+    out = []
+    for w in words:
+        if w in SHELL_STOP or w.startswith(("$", "`")):
+            break
+        out.append(w)
+    return out
 
 
-def collect_raw(prefix: str, yaml_path: Path) -> list[str]:
-    raw: list[str] = []
-    raw += _existing_yaml(yaml_path, prefix)
-    raw += _atuin(prefix)
-    raw += _zsh_history(prefix)
-    raw += _bash_history(prefix)
-    cleaned = []
-    for line in raw:
-        line = line.rstrip("\\").rstrip().strip('"')
-        if line.startswith(prefix):
-            cleaned.append(line)
-    return cleaned
+# ---- cargo ----
+
+CRATE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$")
+GIT_URL_RE = re.compile(r"^https://[A-Za-z0-9.-]+(/[A-Za-z0-9._~-]+)+?(\.git)?$")
+
+# Flags that take a value; the next word is that value, not a crate.
+CARGO_VALUE_FLAGS = {
+    "--version", "--vers", "--git", "--branch", "--tag", "--rev", "--path",
+    "--root", "--index", "--registry", "--features", "-F", "--bin",
+    "--example", "--profile", "--target", "--target-dir", "--jobs", "-j",
+    "--config", "-Z", "--color", "--message-format",
+}
+
+# Crates that turned out not to be tools: `rustc` doesn't exist on crates.io,
+# and `dua` is an unrelated crate whose `dua` binary clashes with dua-cli's.
+# amdgpu_top comes from the official repos (amd.yaml) instead.
+CARGO_EXCLUDE = {"rustc", "dua", "amdgpu_top"}
 
 
-_GO_HOST_RE = re.compile(r"^[a-zA-Z0-9_-]+\.[a-zA-Z]")
+def parse_cargo(line: str) -> list[str]:
+    """Playbook entries (`crate` or `--git URL crate`) from one command."""
+    words = tokens(line)
+    if words[:2] != ["cargo", "install"]:
+        return []
+    git, crates = "", []
+    i = 2
+    while i < len(words):
+        w = words[i]
+        if "=" in w and w.startswith("--"):
+            flag, _, value = w.partition("=")
+            if flag == "--git":
+                git = value
+            i += 1
+        elif w in CARGO_VALUE_FLAGS:
+            if w == "--git" and i + 1 < len(words):
+                git = words[i + 1]
+            i += 2
+        elif w.startswith("-"):
+            i += 1  # boolean flag: --force, --locked, ...
+        else:
+            crates.append(w)
+            i += 1
+
+    if any(c in ("--list", "--help") for c in words):
+        return []
+    if git:
+        if not GIT_URL_RE.match(git):
+            return []
+        # A git source names at most one crate; without one cargo picks the
+        # only crate in the repo.
+        crate = crates[0] if crates and CRATE_RE.match(crates[0]) else ""
+        git = re.sub(r"(\.git)?/?$", "", git)
+        return [f"--git {git} {crate}".strip()]
+    return [c for c in crates if CRATE_RE.match(c) and c not in CARGO_EXCLUDE]
 
 
-def parse_go_install(line: str) -> str | None:
-    """
-    Normalise a `go install` line to `@latest`, preserve flags like -tags.
-    Returns None if the line doesn't look like a valid Go module install.
-    """
-    parts = line.split()
-    # parts[0]='go', parts[1]='install', parts[2..n-1]=flags, parts[n]=pkg
-    if len(parts) < 3:
-        return None
-    pkg = parts[-1]
-    if not _GO_HOST_RE.match(pkg):
-        return None
-    # normalise version
-    pkg = re.sub(r"@[^@]+$", "@latest", pkg)
-    # collect flags (everything between 'install' and the package)
+# ---- go ----
+
+MODULE_RE = re.compile(r"^[a-z0-9.-]+\.[a-z]{2,}(/[A-Za-z0-9._~-]+)*@[A-Za-z0-9._+-]+$")
+GO_FLAG_RE = re.compile(r"^-[a-z]+(=[A-Za-z0-9._,=/ -]*)?$")
+GO_VALUE_FLAGS = {"-ldflags", "-tags", "-gcflags", "-asmflags", "-mod", "-modfile", "-o"}
+SAFE_VALUE_RE = re.compile(r"^[A-Za-z0-9._,=/ -]*$")
+GO_NOISE_FLAGS = {"-v", "-x", "-n", "-a", "-work"}
+
+
+def parse_go(line: str) -> list[str]:
+    words = tokens(line)
+    if words[:2] != ["go", "install"] or len(words) < 3:
+        return []
+    module = words[-1]
+    if "@" not in module:
+        module += "@latest"
+    module = re.sub(r"@[^@]+$", "@latest", module)
+    if not MODULE_RE.match(module):
+        return []
     flags: list[str] = []
     i = 2
-    while i < len(parts) - 1:
-        if parts[i].startswith("-"):
-            flags.append(parts[i])
-            # include the flag value if next token isn't a flag or a module path
-            if (
-                i + 1 < len(parts) - 1
-                and not parts[i + 1].startswith("-")
-                and not _GO_HOST_RE.match(parts[i + 1])
-            ):
-                i += 1
-                flags.append(parts[i])
-        i += 1
-    flag_str = (" " + " ".join(flags)) if flags else ""
-    return f"go install{flag_str} {pkg}"
-
-
-def collect_go(yaml_path: Path) -> list[str]:
-    seen: set[str] = set()
-    result: list[str] = []
-    for raw in collect_raw("go install", yaml_path):
-        parsed = parse_go_install(raw)
-        if parsed and parsed not in seen:
-            seen.add(parsed)
-            result.append(parsed)
-    return sorted(result)
-
-
-def parse_cargo_install(line: str) -> list[dict]:
-    """
-    Parse a `cargo install` line into a list of canonical install descriptors:
-      {'type': 'git',    'url': ..., 'bin': ...}
-      {'type': 'locked', 'pkg': ...}
-      {'type': 'force',  'pkg': ...}
-    Multi-package lines (e.g. `cargo install a b c --force`) are expanded.
-    """
-    parts = line.split()
-    if len(parts) < 3:
-        return []
-
-    git_url = ""
-    git_bin = ""
-    locked = False
-    pkgs: list[str] = []
-
-    i = 2
-    while i < len(parts):
-        t = parts[i]
-        if t == "--git" and i + 1 < len(parts):
-            git_url = parts[i + 1]
+    while i < len(words) - 1:
+        w = words[i]
+        if w in GO_VALUE_FLAGS and i + 1 < len(words) - 1:
+            value = words[i + 1]
+            if not SAFE_VALUE_RE.match(value):
+                return []
+            flags.append(f'{w} "{value}"' if " " in value else f"{w} {value}")
             i += 2
-            if i < len(parts) and not parts[i].startswith("-"):
-                git_bin = parts[i]
-                i += 1
-        elif t == "--locked":
-            locked = True
+        elif w in GO_NOISE_FLAGS:
+            i += 1  # verbosity: not part of what gets installed
+        elif GO_FLAG_RE.match(w):
+            flags.append(w)
             i += 1
-        elif t.startswith("-"):
-            i += 1
-            # skip flag value
-            if i < len(parts) and not parts[i].startswith("-"):
-                i += 1
         else:
-            pkgs.append(t)
-            i += 1
-
-    if git_url:
-        return [{"type": "git", "url": git_url, "bin": git_bin}]
-
-    results = []
-    for pkg in pkgs:
-        if not pkg or pkg == "install":
-            continue
-        results.append({"type": "locked" if locked else "force", "pkg": pkg})
-    return results
+            return []  # not a single module install
+    return [" ".join(flags + [module])]
 
 
-def collect_cargo(yaml_path: Path) -> list[str]:
-    # keyed by package name; locked > force > plain
-    force: dict[str, bool] = {}  # pkg -> True
-    locked: set[str] = set()
-    git: set[str] = set()
-
-    for raw in collect_raw("cargo install", yaml_path):
-        if "--list" in raw:
-            continue
-        for item in parse_cargo_install(raw):
-            if item["type"] == "git":
-                entry = f"cargo install --git {item['url']}"
-                if item["bin"]:
-                    entry += f" {item['bin']}"
-                git.add(entry)
-            elif item["type"] == "locked":
-                locked.add(item["pkg"])
-                force.pop(item["pkg"], None)
-            elif item["type"] == "force":
-                if item["pkg"] not in locked:
-                    force[item["pkg"]] = True
-
-    result: list[str] = []
-    result += sorted(git)
-    result += [f"cargo install --locked {p}" for p in sorted(locked)]
-    result += [f"cargo install --force {p}" for p in sorted(force)]
-    return result
+# ---- playbook list ----
 
 
-def update_yaml(yaml_path: Path, task_name: str, new_lines: list[str]) -> None:
-    text = yaml_path.read_text()
-    indent = "        "
-    new_body = "".join(f"{indent}{l}\n" for l in new_lines)
-
-    pattern_block = (
-        rf"(?m)(    - name: {re.escape(task_name)}\n"
-        rf"      ansible\.builtin\.shell: \|\n)"
-        rf"((?:{indent}[^\n]*\n)*)"
-    )
-    # Match dict form:  ansible.builtin.shell:\n        cmd: ...\n        executable: ...
-    pattern_dict = (
-        rf"(?m)(    - name: {re.escape(task_name)}\n)"
-        rf"      ansible\.builtin\.shell:\n"
-        rf"        cmd:.*\n"
-        rf"        executable: /bin/bash\n"
-    )
-
-    if re.search(pattern_block, text):
-        result = re.sub(pattern_block, lambda m: m.group(1) + new_body, text)
-    elif re.search(pattern_dict, text):
-        result = re.sub(
-            pattern_dict,
-            lambda m: (
-                m.group(1)
-                + "      ansible.builtin.shell: |\n"
-                + new_body
-                + "      args:\n        executable: /bin/bash\n"
-            ),
-            text,
-        )
-    else:
-        print(
-            f"ERROR: could not find task '{task_name}' in {yaml_path}", file=sys.stderr
-        )
+def list_block(text: str, var: str) -> re.Match:
+    m = re.search(rf"(?m)^([ ]*){re.escape(var)}:\n((?:\1  (?:#.*|- .*)\n)*)", text)
+    if not m:
+        print(f"ERROR: could not find the `{var}:` list", file=sys.stderr)
         sys.exit(1)
+    return m
 
-    yaml_path.write_text(result)
+
+def yaml_item(raw: str) -> str:
+    raw = raw.strip()
+    if len(raw) >= 2 and raw[0] == raw[-1] and raw[0] in "'\"":
+        return raw[1:-1]
+    return raw
+
+
+def yaml_scalar(entry: str) -> str:
+    if re.match(r"^[A-Za-z0-9][A-Za-z0-9._/@-]*$", entry):
+        return entry
+    if "'" not in entry:
+        return f"'{entry}'"
+    return '"' + entry.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def update(yaml_path: Path, var: str, parse, prefix: str) -> None:
+    text = yaml_path.read_text()
+    m = list_block(text, var)
+    indent = m.group(1) + "  "
+    current = [
+        yaml_item(l.strip()[2:])
+        for l in m.group(2).splitlines()
+        if l.strip().startswith("- ")
+    ]
+    comments = [l for l in m.group(2).splitlines() if l.strip().startswith("#")]
+
+    # One entry per tool: keyed by git URL or module path (the last word for
+    # go, the source for cargo git entries), so the same tool seen with and
+    # without a crate name or flags is listed once. The playbook's current
+    # entry wins; otherwise the most specific (longest) one.
+    def key(entry: str) -> str:
+        if entry.startswith("--git "):
+            return entry.split()[1]
+        return entry.split()[-1]
+
+    chosen: dict[str, str] = {}
+    for entry in current:
+        chosen.setdefault(key(entry), entry)
+    pinned = set(chosen)
+    for line in history(prefix):
+        for entry in parse(line):
+            k = key(entry)
+            if k in pinned:
+                continue
+            if len(entry) > len(chosen.get(k, "")):
+                chosen[k] = entry
+
+    # git sources first, then by name.
+    ordered = sorted(chosen.values(), key=lambda e: (not e.startswith("--git"), e.lower()))
+    body = "".join(f"{l}\n" for l in comments)
+    body += "".join(f"{indent}- {yaml_scalar(e)}\n" for e in ordered)
+    yaml_path.write_text(text[: m.start(2)] + body + text[m.end(2):])
+
+    added = sorted(set(ordered) - set(current))
+    print(f"{len(ordered)} entries in {yaml_path} ({len(added)} new)")
+    for e in added:
+        print(f"  + {e}")
 
 
 def main() -> None:
     if len(sys.argv) != 3:
         print(f"Usage: {sys.argv[0]} <go|cargo> <yaml_path>", file=sys.stderr)
         sys.exit(1)
-
-    mode = sys.argv[1]
-    yaml_path = Path(sys.argv[2])
-
+    mode, yaml_path = sys.argv[1], Path(sys.argv[2])
     if mode == "go":
-        print(
-            "Collecting go install commands from atuin, zsh_history and bash_history..."
-        )
-        lines = collect_go(yaml_path)
-        update_yaml(yaml_path, "Install Golang Tools", lines)
+        update(yaml_path, "go_tools", parse_go, "go install")
     elif mode == "cargo":
-        print(
-            "Collecting cargo install commands from atuin, zsh_history and bash_history..."
-        )
-        lines = collect_cargo(yaml_path)
-        update_yaml(yaml_path, "Install Cargo Tools", lines)
+        update(yaml_path, "cargo_tools", parse_cargo, "cargo install")
     else:
         print(f"Unknown mode: {mode}", file=sys.stderr)
         sys.exit(1)
-
-    print(f"Written to {yaml_path}")
 
 
 if __name__ == "__main__":

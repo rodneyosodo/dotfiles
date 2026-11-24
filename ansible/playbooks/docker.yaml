@@ -1,16 +1,14 @@
 - name: Docker Setup After Install
   hosts: 127.0.0.1
-  vars:
-    ansible_user: rodneyosodo
   tasks:
     - name: Install Docker if not already installed
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - docker
           - docker-buildx
           - docker-compose
-        use: yay
         state: present
+      become: yes
 
     - name: Start Docker
       ansible.builtin.systemd_service:
@@ -19,16 +17,11 @@
         enabled: true
       become: yes
 
+    # Whoever runs the playbook. Membership of `docker` is root-equivalent;
+    # it takes effect at the next login.
     - name: Add Current User to Docker Group
-      ansible.builtin.shell:
-        cmd: usermod -aG docker "{{ ansible_user }}"
-        executable: /bin/bash
+      ansible.builtin.user:
+        name: "{{ ansible_facts['env']['USER'] }}"
+        groups: docker
+        append: true
       become: yes
-
-    - name: Restart libvirtd
-      ansible.builtin.systemd_service:
-        name: libvirtd
-        state: restarted
-        daemon_reload: true
-      become: yes
-

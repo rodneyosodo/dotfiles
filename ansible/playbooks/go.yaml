@@ -1,36 +1,38 @@
-- name: Rust Setup After Install
+- name: Go Setup After Install
   hosts: 127.0.0.1
+  vars:
+    # Installed with `go install <entry>`: flags (if any), then module@version.
+    # Kept up to date by `make export-go-packages`, which only rewrites this list.
+    go_tools:
+      - '-ldflags "-s -w" github.com/tristanisham/zvm@latest'
+      - github.com/Zxilly/go-size-analyzer/cmd/gsa@latest
+      - github.com/asdf-vm/asdf/cmd/asdf@latest
+      - github.com/derailed/k9s@latest
+      - github.com/go-critic/go-critic/cmd/gocritic@latest
+      - github.com/go-delve/delve/cmd/dlv@latest
+      - github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
+      - github.com/google/pprof@latest
+      - github.com/goreleaser/goreleaser/v2@latest
+      - github.com/jesseduffield/lazygit@latest
+      - github.com/oligot/go-mod-upgrade@latest
+      - github.com/orlangure/gocovsh@latest
+      - github.com/ramonvermeulen/whosthere@latest
+      - github.com/vektra/mockery/v3@latest
+      - go.uber.org/nilaway/cmd/nilaway@latest
+      - golang.org/x/tools/cmd/godoc@latest
+      - golang.org/x/tools/cmd/goimports@latest
+      - golang.org/x/tools/gopls@latest
+      - google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      - google.golang.org/protobuf/cmd/protoc-gen-go@latest
   tasks:
     - name: Install Golang if not already installed
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - go
-        use: yay
         state: present
+      become: yes
 
+    # Every item runs; the task fails at the end if any of them did.
     - name: Install Golang Tools
-      ansible.builtin.shell: |
-        go install -ldflags "-s -w" github.com/tristanisham/zvm@latest
-        go install fortio.org/fortio@latest
-        go install github.com/KnockOutEZ/diffdeck/cmd/diffdeck@latest
-        go install github.com/Zxilly/go-size-analyzer/cmd/gsa@latest
-        go install github.com/asdf-vm/asdf/cmd/asdf@latest
-        go install github.com/derailed/k9s@latest
-        go install github.com/go-critic/go-critic/cmd/gocritic@latest
-        go install github.com/go-delve/delve/cmd/dlv@latest
-        go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
-        go install github.com/google/pprof@latest
-        go install github.com/goreleaser/goreleaser@latest
-        go install github.com/jesseduffield/lazygit@latest
-        go install github.com/oligot/go-mod-upgrade@latest
-        go install github.com/orlangure/gocovsh@latest
-        go install github.com/ramonvermeulen/whosthere@latest
-        go install github.com/rayomqio/benchmq@latest
-        go install github.com/vektra/mockery/v3@latest
-        go install go.uber.org/nilaway/cmd/nilaway@latest
-        go install golang.org/x/tools/cmd/godoc@latest
-        go install golang.org/x/tools/cmd/goimports@latest
-        go install golang.org/x/tools/gopls@latest
-        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-        go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-        go install mvdan.cc/sh/v3/cmd/shfmt@latest
+      ansible.builtin.command: "go install {{ item }}"
+      loop: "{{ go_tools }}"

@@ -1,34 +1,72 @@
+# Installs yay and the `aur_builder` account every AUR install runs as.
+#
+# yay needs `sudo pacman`, and Ansible can't answer a password prompt, so
+# AUR builds run as a dedicated system account with passwordless pacman (the
+# pattern kewlfft.aur documents). Your own account gets no passwordless sudo:
+# anything running as you still needs your password to become aur_builder.
 - name: Install yay
   hosts: 127.0.0.1
   vars:
     build_directory: "/tmp/yay-build"
   tasks:
-    - name: Check if yay is installed
-      command: yay --version
-      register: yay_version
-      ignore_errors: true
-
     - name: Install prerequisites
       community.general.pacman:
         name:
           - git
           - base-devel
         state: present
+      become: yes
+
+    - name: Create the aur_builder account
+      ansible.builtin.user:
+        name: aur_builder
+        system: true
+        create_home: true
+        home: /var/lib/aur_builder
+        shell: /usr/bin/nologin
+      become: yes
+
+    - name: Let aur_builder run pacman without a password
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/11-install-aur_builder
+        content: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman\n"
+        mode: "0440"
+        validate: /usr/sbin/visudo -cf %s
+      become: yes
+
+    # Older versions of these playbooks gave your own account passwordless
+    # pacman, which is passwordless root. Take it away.
+    - name: Remove passwordless pacman from your account
+      ansible.builtin.file:
+        path: /etc/sudoers.d/11-install-aur
+        state: absent
+      become: yes
+
+    - name: Check if yay is installed
+      ansible.builtin.command: yay --version
+      register: yay_version
+      changed_when: false
+      failed_when: false
 
     - name: Clone yay repository
-      git:
+      ansible.builtin.git:
         repo: https://aur.archlinux.org/yay.git
         dest: "{{ build_directory }}"
+      become: yes
+      become_user: aur_builder
       when: yay_version.rc != 0
 
     - name: Build and install yay
-      shell: cd "{{ build_directory }}" && makepkg -si --noconfirm
-      when: yay_version.rc != 0
+      ansible.builtin.command: makepkg -si --noconfirm
       args:
+        chdir: "{{ build_directory }}"
         creates: /usr/bin/yay
+      become: yes
+      become_user: aur_builder
+      when: yay_version.rc != 0
 
     - name: Clean up build directory
-      file:
+      ansible.builtin.file:
         path: "{{ build_directory }}"
         state: absent
-      when: ansible_check_mode == false
+      become: yes

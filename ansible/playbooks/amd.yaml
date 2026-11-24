@@ -2,19 +2,19 @@
   hosts: 127.0.0.1
   tasks:
     - name: Install AMD GPU Utilities
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - amd-ucode
-          - amdgpu_top-bin
+          - amdgpu_top  # in extra; the AUR amdgpu_top-bin is gone
           - mesa
           - xf86-video-amdgpu
           - vulkan-radeon
           - vulkan-icd-loader
           - libva-mesa-driver
-        use: yay
         state: present
-
-    - name: Update GRUB
       become: yes
-      become_user: root
-      shell: grub-mkconfig -o /boot/grub/grub.cfg
+
+    # amd-ucode is loaded through the GRUB config.
+    - name: Update GRUB
+      ansible.builtin.command: grub-mkconfig -o /boot/grub/grub.cfg
+      become: yes

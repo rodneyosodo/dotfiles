@@ -169,7 +169,7 @@ nmtui
 ```bash
 git clone https://github.com/rodneyosodo/dotfiles.git
 cd dotfiles
-bash install
+bash install.sh
 ```
 
 ## Run ansible playbooks
@@ -177,6 +177,16 @@ bash install
 ```bash
 cd ansible
 make setup-desktop
+```
+
+It asks for your sudo password once per playbook. AUR packages are built as a dedicated `aur_builder` system account, which `yay.yaml` creates with passwordless `pacman`; your own account never gets passwordless sudo, and the playbook removes the old `/etc/sudoers.d/11-install-aur` rule that gave it that. Official-repo packages install with plain `pacman`.
+
+Go and Rust tools are the `go_tools` and `cargo_tools` lists in `go.yaml` and `rust.yaml`, installed one item at a time, so a failure is reported instead of hidden. To add the tools you have installed by hand since:
+
+```bash
+make export-go-packages     # merges `go install` lines from atuin and shell history
+make export-cargo-packages  # same for `cargo install`
+git diff playbooks/         # review: history can include one-off or mistyped installs
 ```
 
 ## After Installation

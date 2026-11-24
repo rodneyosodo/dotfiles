@@ -1,54 +1,77 @@
 - name: Rust Setup After Install
   hosts: 127.0.0.1
+  vars:
+    # Installed with `cargo install --locked <entry>`. One crate name per
+    # entry, or a git source as "--git <url> <crate>". Kept up to date by
+    # `make export-cargo-packages`, which only rewrites this list.
+    cargo_tools:
+      - "--git https://github.com/rodneyosodo/dusk dusk"
+      - TidyTUI
+      - agent-browser
+      - ai-usagebar
+      - bandwhich
+      - cargo-component
+      - cargo-dist
+      - cargo-generate
+      - cargo-shear
+      - cargo-tarpaulin
+      - cargo-upgrades
+      - clorinde
+      - dtop
+      - du-dust
+      - dua-cli
+      - fd-find
+      - gqlint
+      - jwt-cli
+      - lumen
+      - pg-extras
+      - ripgrep
+      - selene
+      - trippy
+      - wasm-pack
+      - wkg
+      - zellij
   tasks:
     - name: Install Rustup if not already installed
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - rustup
-        use: yay
         state: present
+      become: yes
 
-    - name: Install Nightly Toolchain
-      ansible.builtin.shell: |
-        rustup update
-        rustup target add wasm32-wasip1 wasm32-wasip2 wasm32-wasi wasm32-unknown-unknown
-        rustup toolchain install nightly nightly-2018-12-27
-        rustup component add clippy cargo rustfmt rust-std
+    # Arch's rustup ships without a toolchain; nothing below works until
+    # there is a default one.
+    - name: Install the stable toolchain and make it the default
+      ansible.builtin.command: rustup default stable
+      register: rustup_default
+      changed_when: "'installed' in rustup_default.stdout + rustup_default.stderr"
 
+    - name: Update toolchains
+      ansible.builtin.command: rustup update
+      changed_when: "'updated' in rustup_update.stdout + rustup_update.stderr"
+      register: rustup_update
+
+    - name: Install extra toolchains
+      ansible.builtin.command: rustup toolchain install nightly nightly-2018-12-27
+      register: rustup_toolchains
+      changed_when: "'installed' in rustup_toolchains.stdout + rustup_toolchains.stderr"
+
+    # wasm32-wasi was removed in Rust 1.84; wasm32-wasip1 replaces it.
+    - name: Add targets
+      ansible.builtin.command: rustup target add wasm32-wasip1 wasm32-wasip2 wasm32-unknown-unknown
+      register: rustup_targets
+      changed_when: "'installing' in rustup_targets.stderr"
+
+    - name: Add components
+      ansible.builtin.command: rustup component add clippy rustfmt rust-std
+      register: rustup_components
+      changed_when: "'installing' in rustup_components.stderr"
+
+    # Without --force, cargo skips a crate that is already up to date and
+    # upgrades it when a newer release exists. Every item runs; the task
+    # fails at the end if any of them did.
     - name: Install Cargo Tools
-      ansible.builtin.shell: |
-        cargo install --locked zellij
-        cargo install --git https://github.com/rodneyosodo/dusk --force --locked dusk
-        cargo install --force TidyTUI
-        cargo install --force --locked ai-usagebar
-        cargo install --force agent-browser
-        cargo install --force amdgpu_top
-        cargo install --force bandwhich
-        cargo install --force cargo-component
-        cargo install --force cargo-dist
-        cargo install --force cargo-generate
-        cargo install --force cargo-shear
-        cargo install --force cargo-tarpaulin
-        cargo install --force cargo-upgrades
-        cargo install --force clorinde
-        cargo install --force dtop
-        cargo install --force du-dust
-        cargo install --force dua
-        cargo install --force dua-cli
-        cargo install --force fd-find
-        cargo install --force git-cliff
-        cargo install --force gqlint
-        cargo install --force jwt-cli
-        cargo install --force lumen
-        cargo install --force medium-to-markdown
-        cargo install --force mini-redis
-        cargo install --force oxker
-        cargo install --force pg-extras
-        cargo install --force ripgrep
-        cargo install --force rumdl
-        cargo install --force rustc
-        cargo install --force selene
-        cargo install --force sleek
-        cargo install --force trippy
-        cargo install --force wasm-pack
-        cargo install --force wkg
+      ansible.builtin.command: "cargo install --locked {{ item }}"
+      loop: "{{ cargo_tools }}"
+      register: cargo_install
+      changed_when: "'Installed package' in cargo_install.stderr or 'Replaced package' in cargo_install.stderr"

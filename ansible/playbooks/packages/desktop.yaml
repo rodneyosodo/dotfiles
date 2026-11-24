@@ -25,29 +25,26 @@
       become: yes
       remote_user: root
 
-    - name: Configure passwordless sudo for pacman
-      copy:
-        dest: /etc/sudoers.d/11-install-aur
-        content: |
-          {{ ansible_facts['env']['USER'] }} ALL=(ALL) NOPASSWD: /usr/bin/pacman
-        mode: "0440"
-        validate: /usr/sbin/visudo -cf %s
+    # Packages that left the AUR for the official repos under another name,
+    # and conflict with it. pacman's answer to "remove the old one?" under
+    # --noconfirm is no, which fails the install below, so remove them first.
+    # A no-op where they aren't installed.
+    - name: Remove AUR packages replaced by official ones
+      community.general.pacman:
+        name:
+          - amdgpu_top-bin  # now amdgpu_top in extra
+        state: absent
       become: yes
 
-    - name: Ensure build directory exists with correct permissions
-      file:
-        path: "{{ ansible_facts['env']['HOME'] }}/.cache/yay"
-        state: directory
-        owner: "{{ ansible_facts['env']['USER'] }}"
-        mode: "0755"
-      become: no
-
+    # AUR installs run as aur_builder, created by yay.yaml with passwordless
+    # pacman. Your own account never gets passwordless sudo.
     - name: Install packages using yay
       kewlfft.aur.aur:
         name: "{{ package_list }}"
         use: yay
         state: latest
-      become: no
+      become: yes
+      become_user: aur_builder
 
     # The desktop shell (Hyprland Lua config, Quickshell bar, Hokum, Vicinae,
     # hypridle/hyprlock, dusk) needs these whether or not desktop.txt has
@@ -85,7 +82,8 @@
           - vulkan-icd-loader
         use: yay
         state: present
-      become: no
+      become: yes
+      become_user: aur_builder
 
     - name: Enable desktop shell user services
       ansible.builtin.systemd_service:
@@ -129,12 +127,11 @@
       become_user: root
 
     - name: Install Syncthing
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - syncthing
-        use: yay
         state: present
-      become: no
+      become: yes
 
     - name: Start Syncthing Service
       ansible.builtin.systemd_service:
@@ -152,12 +149,11 @@
       become: yes
 
     - name: Install Reflector
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - reflector
-        use: yay
         state: present
-      become: no
+      become: yes
 
     - name: Update mirrorlist
       ansible.builtin.shell: |

@@ -23,13 +23,14 @@
       community.general.pacman:
         upgrade: true
 
+    # AUR: built as aur_builder (see yay.yaml).
     - name: Install Preload
       kewlfft.aur.aur:
         name:
           - preload
         use: yay
         state: latest
-      become: no
+      become_user: aur_builder
 
     - name: Start Preload
       ansible.builtin.systemd_service:
@@ -37,14 +38,12 @@
         state: started
         enabled: true
 
+    # Official repos: plain pacman. yay refuses to run as root.
     - name: Install pacman-contrib
-      kewlfft.aur.aur:
+      community.general.pacman:
         name:
           - pacman-contrib
-        use: yay
         state: latest
-      become: yes
-      become_user: root
 
     - name: Start paccache.timer
       ansible.builtin.systemd_service:

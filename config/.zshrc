@@ -34,6 +34,10 @@ zinit light Aloxaf/fzf-tab
 
 # Add in snippets
 zinit snippet OMZP::git
+# ssh-agent reads these when it loads, so they go first.
+zstyle :omz:plugins:ssh-agent agent-forwarding yes
+zstyle :omz:plugins:ssh-agent identities github twiga-ssh
+zstyle :omz:plugins:ssh-agent lifetime 30d
 zinit snippet OMZP::ssh-agent
 zinit snippet OMZP::bgnotify
 zinit snippet OMZP::dotenv
@@ -63,7 +67,6 @@ if [[ ! -f "${OMZ_PLUGINS_DIR}/termcolor.py" ]]; then
 fi
 
 zinit load 'zsh-users/zsh-history-substring-search'
-zinit ice wait atload '_history_substring_search_config'
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -104,9 +107,6 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
-zstyle :omz:plugins:ssh-agent agent-forwarding yes
-zstyle :omz:plugins:ssh-agent identities github twiga-ssh
-zstyle :omz:plugins:ssh-agent lifetime 30d
 
 
 # Aliases
@@ -121,7 +121,12 @@ export EDITOR=nvim
 export TERMINAL=ghostty
 export BROWSER=brave
 
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -l -g ""'
+# fd, else ripgrep, for fzf's file list (both in rust.yaml)
+if command -v fd &>/dev/null; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+elif command -v rg &>/dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+fi
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.cargo/bin
@@ -145,8 +150,6 @@ if command -v fzf &>/dev/null; then
   eval "$(fzf --zsh)"
 fi
 
-eval `ssh-agent -s`
-
 if command -v pyenv &>/dev/null; then
   eval "$(pyenv init - zsh)"
 fi
@@ -155,26 +158,10 @@ if command -v atuin &>/dev/null; then
   eval "$(atuin init zsh)"
 fi
 
-# SSH key management with error handling
-add_ssh_keys() {
-  local key_file="$1"
-  local key_name="$2"
-  
-  if [ -f "$key_file" ]; then
-    if ! ssh-add -l | grep -q "$key_name"; then
-      if command -v keychain &>/dev/null; then
-        eval `keychain --quiet --ssh-allow-forwarded --eval "$key_file"`
-      else
-        ssh-add "$key_file" 2>/dev/null || echo "Could not add SSH key: $key_file"
-      fi
-    fi
-  else
-    echo "SSH key file not found: $key_file"
-  fi
-}
-
-add_ssh_keys "$HOME/.ssh/github" "github"
-add_ssh_keys "$HOME/.ssh/twiga-ssh" "twiga.com"
+# SSH: the oh-my-zsh ssh-agent plugin (loaded above, configured by the
+# :omz:plugins:ssh-agent zstyles) runs one agent shared by every shell and
+# loads the github and twiga-ssh identities. Don't start another agent here:
+# `eval $(ssh-agent -s)` left one running per shell.
 
 # NPM packages setup
 if [ ! -d "${HOME}/.npm-packages" ]; then
@@ -248,4 +235,4 @@ if [ -f "$HOME/.opencode/bin/opencode" ]; then
   export PATH="$HOME/.opencode/bin:$PATH"
 fi
 # bun completions
-[ -s "/home/rodneyosodo/.bun/_bun" ] && source "/home/rodneyosodo/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"

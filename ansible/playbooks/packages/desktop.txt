@@ -3,7 +3,7 @@ act
 adr-tools
 alacritty
 amd-ucode
-amdgpu_top-bin
+amdgpu_top
 ansible
 appmenu-gtk-module
 arduino-cli
@@ -30,7 +30,7 @@ brightnessctl
 bruno-bin
 btop
 btrfs-progs
-bun-bin
+bun
 ccache
 clang
 claude-code
@@ -62,7 +62,6 @@ eza
 f3
 fd
 flameshot
-fvm
 fzf
 gdm
 ghostty
@@ -71,6 +70,7 @@ git
 git-delta
 git-lfs
 github-cli
+gke-gcloud-auth-plugin
 gnome-backgrounds
 gnome-calculator
 gnome-calendar
@@ -100,7 +100,6 @@ gnome-weather
 go
 google-chrome
 google-cloud-cli
-google-cloud-cli-gke-gcloud-auth-plugin
 goreleaser
 graphviz
 grilo-plugins
@@ -179,10 +178,9 @@ nvm
 obs-studio
 obsidian
 openbsd-netcat
-opencode-bin
+opencode
 openocd
 openvpn
-orca
 otf-codenewroman-nerd
 otf-font-awesome
 pacman-contrib
@@ -229,7 +227,6 @@ rtl-sdr-librtlsdr-git
 rtl-wmbus-git
 ruff
 rustup
-rye
 rygel
 sddm
 shellcheck
@@ -246,7 +243,6 @@ sushi
 swtpm
 syncthing
 tailscale
-teams
 tecla
 terraform
 texlive-basic

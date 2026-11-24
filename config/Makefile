@@ -14,9 +14,20 @@ install-stow: ## Install GNU Stow if not already installed
 		echo "Stow installed successfully"; \
 	fi
 
+# --adopt moves files that already exist in ~ (a default .zshrc from the
+# installer, say) into this repo instead of failing, which overwrites the
+# repo's version. Check afterwards and point out anything that changed.
 install-dotfiles: ## Install dotfiles using stow
 	@echo "Installing dotfiles..."
-	@stow --adopt -t ~ . || { echo "Failed to install dotfiles"; exit 1; }
+	@before=$$(git diff -- . | sha1sum); \
+	stow --adopt -t ~ . || { echo "Failed to install dotfiles"; exit 1; }; \
+	if [ "$$(git diff -- . | sha1sum)" != "$$before" ]; then \
+		echo ""; \
+		echo "WARNING: stow adopted existing files, replacing the repo's versions:"; \
+		git diff --stat -- .; \
+		echo "Keep the repo's version with: git checkout -- <file>"; \
+		echo "(git diff shows what each adopted file contained.)"; \
+	fi
 	@echo "Dotfiles installed successfully"
 
 backup-dotfiles: ## Backup existing dotfiles before installing

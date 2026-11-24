@@ -6,22 +6,28 @@ prep: ## Install ansible collections
 	ansible-galaxy collection install kewlfft.aur
 
 setup-desktop: prep ## Setup desktop environment (runs prep)
-	ansible-playbook playbooks/yay.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/pacman.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/packages/desktop.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/amd.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/audio.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/docker.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/go.yaml --connection=local
-	ansible-playbook playbooks/rust.yaml --connection=local
+	# ansible-playbook playbooks/yay.yaml --connection=local --ask-become-pass
+	# ansible-playbook playbooks/pacman.yaml --connection=local --ask-become-pass
+	# ansible-playbook playbooks/packages/desktop.yaml --connection=local --ask-become-pass
+	# ansible-playbook playbooks/amd.yaml --connection=local --ask-become-pass
+	# ansible-playbook playbooks/audio.yaml --connection=local --ask-become-pass
+	# ansible-playbook playbooks/docker.yaml --connection=local --ask-become-pass
+	ansible-playbook playbooks/go.yaml --connection=local --ask-become-pass
+	ansible-playbook playbooks/rust.yaml --connection=local --ask-become-pass
 
 install-desktop: prep ## Install desktop packages (runs prep)
+	ansible-playbook playbooks/yay.yaml --connection=local --ask-become-pass
 	ansible-playbook playbooks/packages/desktop.yaml --connection=local --ask-become-pass
-	ansible-playbook playbooks/go.yaml --connection=local
-	ansible-playbook playbooks/rust.yaml --connection=local
+	ansible-playbook playbooks/go.yaml --connection=local --ask-become-pass
+	ansible-playbook playbooks/rust.yaml --connection=local --ask-become-pass
 
+# Skips installed packages that no longer exist in the repos or the AUR
+# (removed or renamed upstream): listing them fails the whole yay install.
 export-packages: ## Export installed packages to playbooks/packages/desktop.txt
-	pacman -Qqe > playbooks/packages/desktop.txt
+	@gone=$$(pacman -Qqm | xargs -r yay -Si --aur 2>&1 >/dev/null | sed -n 's/^ -> No AUR package found for //p'); \
+	pacman -Qqe | awk -v gone="$$gone" 'BEGIN { n = split(gone, g, "\n"); for (i = 1; i <= n; i++) skip[g[i]] = 1 } !($$0 in skip)' > playbooks/packages/desktop.txt; \
+	echo "Wrote $$(wc -l < playbooks/packages/desktop.txt) packages to playbooks/packages/desktop.txt"; \
+	if [ -n "$$gone" ]; then echo "Skipped, no longer in the repos or AUR (find a replacement or uninstall):"; printf '  %s\n' $$gone; fi
 
 export-go-packages: ## Export installed go packages to playbooks/go.yaml
 	python3 scripts/export_packages.py go playbooks/go.yaml
