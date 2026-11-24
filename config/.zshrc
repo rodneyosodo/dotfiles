@@ -112,8 +112,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 # Aliases
 alias c='clear'
 alias cat='bat'
-alias ls='exa --icons=auto -F'
-alias ll='exa --icons=auto -F -bgh -l --total-size'
+alias ls='eza --icons=auto -F'
+alias ll='eza --icons=auto -F -bgh -l --total-size'
 alias fzf='fzf --preview="bat --color=always {}"'
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 

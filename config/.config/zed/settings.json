@@ -68,6 +68,12 @@
       "enabled": true,
       "settings": {},
     },
+    "browse": {
+      "command": "/home/rodneyosodo/.local/bin/browse",
+      "args": [
+        "mcp"
+      ]
+    },
   },
   "agent_servers": {
     "claude-acp": {
@@ -86,7 +92,7 @@
   },
   "git_panel": {
     "sort_by": "path",
-    "group_by": "status",
+    "group_by": "staging",
     "dock": "left",
     "sort_by_path": false,
     "tree_view": false,
